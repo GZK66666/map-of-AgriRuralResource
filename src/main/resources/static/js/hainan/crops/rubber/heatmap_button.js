@@ -17,16 +17,12 @@
             // 将当前点击的按钮设置为选中样式
             button.classList.add("selected");
 
-            // 更新热力图标题
-            var title = document.querySelector('.main_title .title-text');
-            var dataType = document.querySelector("#nav1 .options li a.selected").getAttribute('data-type');
-            title.innerHTML = "2022年海南各市县天然橡胶" + dataType;
-
             // 更新热力图
             var myChart = echarts.init(document.getElementById('chart_map'));
 
             var apiUrl = '/api/hainan-crops/rubber/get2022EndYearAreaOrProduction?index=1';
             var suffix = "公顷";
+            var dataType = document.querySelector("#nav1 .options li a.selected").getAttribute('data-type');
             if (dataType === '总产量分布') {
                 apiUrl = '/api/hainan-crops/rubber/get2022EndYearAreaOrProduction?index=2';
                 suffix = "吨";
