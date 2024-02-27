@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>屯昌县域农业农村经济一张图</title>
+    <link href="../../static/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../static/css/base.css">
+    <link rel="stylesheet" href="../../static/css/index.css">
+
+    <style>
+        .t_title{
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            font-size: 2.5em;
+            line-height: 80px;
+            color: #fff;
+        }
+        #chart_map{
+            cursor: pointer;
+            margin-top: 50px;
+        }
+        .t_show{
+            position: absolute;
+            top: 0;
+            right: 0;
+            border-radius: 2px;
+            background: #2C58A6;
+            padding: 2px 5px;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .header_nav {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .title-container {
+            z-index: 10000;
+        }
+
+        .left-buttons,
+        .left-buttons2,
+        .right-buttons {
+            display: flex;
+            align-items: center;
+            font-size: 1.5em;
+            z-index: 10000;
+        }
+
+        .left-button {
+            position: absolute;
+            left: 5%;
+        }
+
+        .left-button2 {
+            position: absolute;
+            left: 18%;
+        }
+
+        .right-button {
+            position: absolute;
+            left: 75%;
+        }
+
+        .left-button,
+        .left-button2,
+        .right-button {
+            padding: 5px 10px;
+            background-color: transparent;
+            color: #bcd1d1;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            margin-top: -20px;
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .left-button:hover,
+        .left-button2:hover,
+        .right-button:hover {
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .left-button.selected,
+        .left-button2.selected,
+        .right-button.selected {
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .slider {
+            position: absolute;
+            left: 4%;
+            top: 10px;
+            width: 200px;
+            height: 40px;
+            background: #5fa4ed;
+            border-radius: 5px;
+            transition: all .3s ease;
+            z-index: 5;
+            clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+            animation: waves 2s ease-in-out infinite;
+        }
+
+        .left-buttons:hover ~ .slider {
+            left: 4%;
+        }
+
+        .left-buttons2:hover ~ .slider {
+            left: 17.75%;
+        }
+
+        .right-buttons:hover ~ .slider {
+            left: 74.7%;
+        }
+
+        @keyframes waves {
+            0% {
+                clip-path: polygon(
+                        0% 15%,
+                        5% 11%,
+                        12% 6%,
+                        20% 2%,
+                        30% 0%,
+                        40% 1%,
+                        50% 3%,
+                        60% 1%,
+                        70% 0%,
+                        80% 1%,
+                        90% 3%,
+                        100% 6%,
+                        100% 100%,
+                        0% 100%);
+            }
+            50% {
+                clip-path: polygon(
+                        0% 3%,
+                        5% 6%,
+                        12% 10%,
+                        20% 14%,
+                        30% 16%,
+                        40% 15%,
+                        50% 12%,
+                        60% 11%,
+                        70% 8%,
+                        80% 5%,
+                        90% 5%,
+                        100% 5%,
+                        100% 100%,
+                        0% 100%);
+            }
+            100% {
+                clip-path: polygon(
+                        0% 15%,
+                        5% 11%,
+                        12% 6%,
+                        20% 2%,
+                        30% 0%,
+                        40% 1%,
+                        50% 3%,
+                        60% 1%,
+                        70% 0%,
+                        80% 1%,
+                        90% 3%,
+                        100% 6%,
+                        100% 100%,
+                        0% 100%);
+            }
+        }
+
+        nav {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-top: 20px;
+            z-index: 10;
+        }
+
+        .options {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .options li {
+            margin-right: 60px;
+        }
+
+        .options li:last-child {
+            margin-right: 0;
+        }
+
+        .options li a {
+            text-decoration: none;
+            color: white;
+            padding: 5px 10px;
+            background-color: #2C58A6;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            white-space: nowrap; /* 阻止文本换行 */
+        }
+
+        .options li a.selected {
+            background-color: #5fa4ed;
+        }
+
+        .options li a:hover {
+            background-color: #5fa4ed;
+        }
+
+        .btn-group-container {
+            text-align: center;
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+
+        .btn-group-container .btn-group {
+            margin-right: 10px;
+        }
+
+        .btn.custom-btn {
+            font-size: 18px;
+            font-weight: 600;
+            color: #fff;
+            margin-top: -2px;
+            margin-right: -6px;
+        }
+
+        /* 自定义按钮的样式 */
+        .custom-btn {
+            background-color: #2C58A6; /* 设置按钮背景颜色 */
+            color: white; /* 设置按钮文字颜色 */
+        }
+
+        /* 被选中按钮的样式 */
+        .custom-btn.selected {
+            background-color: #5fa4ed; /* 设置被选中按钮背景颜色 */
+            color: white; /* 设置被选中按钮文字颜色 */
+        }
+
+        .bottom_2 {
+            display: flex;
+        }
+
+        .bottom_chart {
+            width: 33.33%;
+            height: 200px;
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+
+<div id="viewName" th:text="${viewName}"></div> <!-- 后端返回视图名称的占位符，供js代码获取 -->
+
+<!--header-->
+<div class="header">
+    <div class="bg_header">
+        <!-- 在标题上层容器中添加按钮 -->
+        <div class="header_nav">
+            <div class="left-buttons">
+                <button class="left-button" id="ecom">农业农村经济</button>
+            </div>
+            <div class="left-buttons2">
+                <button class="left-button2" id="enterprise">新型农业经营主体</button>
+            </div>
+            <div class="title-container">
+                <div class="t_title">
+                    屯昌县域农业农村经济一张图
+                </div>
+            </div>
+            <div class="right-buttons">
+                <button class="right-button" id="cropIndustry">热带作物产业数据</button>
+            </div>
+            <div class="slider"></div>
+        </div>
+    </div>
+</div>
+
+<div class="btn-group-container">
+
+    <button class="btn custom-btn" id="prevBtn" style="margin-right: 50px">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+    </button>
+
+    <button class="btn custom-btn" id="year1" style="margin-right: 50px">
+        <span class="glyphicon glyphicon-time" aria-hidden="true"></span> 2021
+    </button>
+
+    <button class="btn custom-btn" id="year2" style="margin-right: 50px">
+        <span class="glyphicon glyphicon-time" aria-hidden="true"></span> 2020
+    </button>
+
+    <button class="btn custom-btn" id="year3" style="margin-right: 50px">
+        <span class="glyphicon glyphicon-time" aria-hidden="true"></span> 2019
+    </button>
+
+    <button class="btn custom-btn" id="year4" style="margin-right: 50px">
+        <span class="glyphicon glyphicon-time" aria-hidden="true"></span> 2018
+    </button>
+
+    <button class="btn custom-btn" id="year5" style="margin-right: 50px">
+        <span class="glyphicon glyphicon-time" aria-hidden="true"></span> 2017
+    </button>
+
+    <button class="btn custom-btn" id="year6" style="margin-right: 50px">
+        <span class="glyphicon glyphicon-time" aria-hidden="true"></span> 2016
+    </button>
+
+    <button class="btn custom-btn" id="nextBtn">
+        <span class="glyphicon glyphicon-chevron-right"></span>
+    </button>
+
+</div>
+
+<!--main-->
+<div class="data_content">
+    <div class="data_main">
+        <div class="main_left fl">
+            <div class="left_1 t_btn6" style="cursor: pointer;">
+                <!--左上边框-->
+                <div class="t_line_box">
+                    <i class="t_l_line"></i>
+                    <i class="l_t_line"></i>
+                </div>
+                <!--右上边框-->
+                <div class="t_line_box">
+                    <i class="t_r_line"></i>
+                    <i class="r_t_line"></i>
+                </div>
+                <!--左下边框-->
+                <div class="t_line_box">
+                    <i class="l_b_line"></i>
+                    <i class="b_l_line"></i>
+                </div>
+                    <!--右下边框-->
+                    <div class="t_line_box">
+                    <i class="r_b_line"></i>
+                    <i class="b_r_line"></i>
+                </div>
+                <div class="main_title" id="left_1">
+                    <img src="../static/img/t_1.png" alt="">
+                  2021屯昌三产收入
+                </div>
+                <div id="chart_1" class="chart" style="width:100%;height: 280px;"></div>
+            </div>
+            <div class="left_2" style="cursor: pointer;">
+                <!--左上边框-->
+                <div class="t_line_box">
+                    <i class="t_l_line"></i>
+                    <i class="l_t_line"></i>
+                </div>
+                <!--右上边框-->
+                <div class="t_line_box">
+                    <i class="t_r_line"></i>
+                    <i class="r_t_line"></i>
+                </div>
+                <!--左下边框-->
+                <div class="t_line_box">
+                    <i class="l_b_line"></i>
+                    <i class="b_l_line"></i>
+                </div>
+                    <!--右下边框-->
+                    <div class="t_line_box">
+                    <i class="r_b_line"></i>
+                    <i class="b_r_line"></i>
+                </div>
+                <div class="main_title" id="left_2">
+                    <img src="../static/img/t_1.png" alt="">
+                    2021屯昌农林牧渔业总产值构成
+                </div>
+                <div id="chart_2" class="chart t_btn9" style="width:100%;height: 280px;"></div>
+            </div>
+        </div>
+        <div class="main_center fl">
+            <div class="center_text">
+                <!--左上边框-->
+                <div class="t_line_box">
+                    <i class="t_l_line"></i>
+                    <i class="l_t_line"></i>
+                </div>
+                <!--右上边框-->
+                <div class="t_line_box">
+                    <i class="t_r_line"></i>
+                    <i class="r_t_line"></i>
+                </div>
+                <!--左下边框-->
+                <div class="t_line_box">
+                    <i class="l_b_line"></i>
+                    <i class="b_l_line"></i>
+                </div>
+                 <!--右下边框-->
+                 <div class="t_line_box">
+                    <i class="r_b_line"></i>
+                    <i class="b_r_line"></i>
+                </div>
+                <div class="main_title" id="mapTitle">
+                    <img src="../static/img/t_3.png" alt="">
+                    <span class="title-text">
+                        2021屯昌耕地分布
+                    </span>
+                </div>
+                <nav id="nav1">
+                    <ul class="options">
+                        <li><a data-type="landArea">各镇耕地面积</a></li>
+                        <li><a data-type="population">各镇人口</a></li>
+                    </ul>
+                </nav>
+                <div id="chart_map" style="width:100%;height:610px;"></div>
+            </div>
+        </div>
+        <div class="main_right fr">
+            <div class="right_1">
+                <!--左上边框-->
+                <div class="t_line_box">
+                    <i class="t_l_line"></i>
+                    <i class="l_t_line"></i>
+                </div>
+                <!--右上边框-->
+                <div class="t_line_box">
+                    <i class="t_r_line"></i>
+                    <i class="r_t_line"></i>
+                </div>
+                <!--左下边框-->
+                <div class="t_line_box">
+                    <i class="l_b_line"></i>
+                    <i class="b_l_line"></i>
+                </div>
+                    <!--右下边框-->
+                    <div class="t_line_box">
+                    <i class="r_b_line"></i>
+                    <i class="b_r_line"></i>
+                </div>
+                <div class="main_title" id="right_1">
+                    <img src="../static/img/t_4.png" alt="">
+                    2021屯昌农机拥有量
+                </div>
+                <div id="chart_3" class="chart t_btn9" style="width:100%;height: 280px;"></div>
+            </div>
+            <div class="right_2">
+                <!--左上边框-->
+                <div class="t_line_box">
+                    <i class="t_l_line"></i>
+                    <i class="l_t_line"></i>
+                </div>
+                <!--右上边框-->
+                <div class="t_line_box">
+                    <i class="t_r_line"></i>
+                    <i class="r_t_line"></i>
+                </div>
+                <!--左下边框-->
+                <div class="t_line_box">
+                    <i class="l_b_line"></i>
+                    <i class="b_l_line"></i>
+                </div>
+                    <!--右下边框-->
+                    <div class="t_line_box">
+                    <i class="r_b_line"></i>
+                    <i class="b_r_line"></i>
+                </div>
+                <div class="main_title" id="right_2">
+                    <img src="../static/img/t_1.png" alt="">
+                    2021屯昌化肥施用量
+                </div>
+                <div id="chart_6" class="echart fl t_btn4" style="width:100%;height: 280px;cursor: pointer;"></div>
+            </div>
+            <div class="right_3">
+                <!--左上边框-->
+                <div class="t_line_box">
+                    <i class="t_l_line"></i>
+                    <i class="l_t_line"></i>
+                </div>
+                <!--右上边框-->
+                <div class="t_line_box">
+                    <i class="t_r_line"></i>
+                    <i class="r_t_line"></i>
+                </div>
+                <!--左下边框-->
+                <div class="t_line_box">
+                    <i class="l_b_line"></i>
+                    <i class="b_l_line"></i>
+                </div>
+                <!--右下边框-->
+                <div class="t_line_box">
+                    <i class="r_b_line"></i>
+                    <i class="b_r_line"></i>
+                </div>
+                <div class="main_title">
+                    <img src="../static/img/t_4.png" alt="">
+                    历年屯昌农田有效灌溉面积情况
+                </div>
+                <div id="chart_4" class="echart fl t_btn4" style="width:100%;height: 280px;cursor: pointer;"></div>
+            </div>
+        </div>
+    </div>
+    <div class="data_bottom">
+        <div class="bottom_1 fl t_btn5" style="cursor: pointer;">
+            <!--左上边框-->
+            <div class="t_line_box">
+                <i class="t_l_line"></i>
+                <i class="l_t_line"></i>
+            </div>
+            <!--右上边框-->
+            <div class="t_line_box">
+                <i class="t_r_line"></i>
+                <i class="r_t_line"></i>
+            </div>
+            <!--左下边框-->
+            <div class="t_line_box">
+                <i class="l_b_line"></i>
+                <i class="b_l_line"></i>
+            </div>
+                <!--右下边框-->
+                <div class="t_line_box">
+                <i class="r_b_line"></i>
+                <i class="b_r_line"></i>
+            </div>
+            <div class="main_title">
+                <img src="../static/img/t_4.png" alt="">
+                历年屯昌农民人均收入/消费情况
+            </div>
+            <div id="chart_5" class="echart fl" style="width:100%;height: 250px;margin-top: 15px;"></div>
+        </div>
+        <div class="bottom_center fl">
+            <div class="bottom_2 fl">
+                <!--左上边框-->
+                <div class="t_line_box">
+                    <i class="t_l_line"></i>
+                    <i class="l_t_line"></i>
+                </div>
+                <!--右上边框-->
+                <div class="t_line_box">
+                    <i class="t_r_line"></i>
+                    <i class="r_t_line"></i>
+                </div>
+                <!--左下边框-->
+                <div class="t_line_box">
+                    <i class="l_b_line"></i>
+                    <i class="b_l_line"></i>
+                </div>
+                    <!--右下边框-->
+                    <div class="t_line_box">
+                    <i class="r_b_line"></i>
+                    <i class="b_r_line"></i>
+                </div>
+                <div class="main_title" id="bottom_2">
+                    <img src="../static/img/t_7.png" alt="">
+                    2021海南各市县农药施用量
+                </div>
+                <nav id="nav2">
+                    <ul class="options">
+                        <li><a data-type="agrochemical">农药</a></li>
+                        <li><a data-type="fertilizers">化肥</a></li>
+                        <li><a data-type="irrigatedArea">灌溉面积</a></li>
+                    </ul>
+                </nav>
+                <div id="chart_7" class="echart fl" style="width:100%;height: 250px;margin-top: 15px;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+<script src="../../static/js/jquery-2.2.1.min.js"></script>
+<script src="../../static/js/bootstrap.min.js"></script>
+<script src="../../static/js/common.js"></script>
+<script src="../../static/js/echarts.min.js"></script>
+<script src="../../static/js/dataTool.js"></script>
+<script src="../../static/js/tunchang/ecom/ecom.js"></script>
+<script src="../../static/js/tunchang/tunchang.js"></script>
+<script src="../../static/js/tunchang/ecom/heatmap_button.js"></script>
+<script src="../../static/js/tunchang/ecom/hainan_allTown_button.js"></script>
+<script src="../../static/js/tunchang/ecom/year.js"></script>
+<script src="../../static/js/tunchang/nav_button.js"></script>
+
+</html>
