@@ -558,93 +558,66 @@ $(function () {
     }
 
     function echart_6() {
-        // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('chart_6'));
+        var chart_6_1 = echarts.init(document.getElementById('chart_6_1'));
+        var chart_6_2 = echarts.init(document.getElementById('chart_6_2'));
+        var chart_6_3 = echarts.init(document.getElementById('chart_6_3'));
+        var chart_6_4 = echarts.init(document.getElementById('chart_6_4'));
+        var chart_6_5 = echarts.init(document.getElementById('chart_6_5'));
 
-        var option = {
-            tooltip: {
-                trigger: 'axis',
-                formatter: function (params) {
-                    var result = params[0].name + '<br>';
-                    params.forEach(function (item) {
-                        result += item.seriesName + ': ' + item.value + ' 人<br>'; // 在这里添加公顷后缀
-                    });
-                    return result;
-                }
-            },
-            toolbox: {
-                show: false, // 右上角的选项
-                feature: {
-                    dataZoom: {
-                        yAxisIndex: 'none'
-                    },
-                    dataView: { readOnly: false },
-                    magicType: { type: ['line', 'bar'] },
-                    restore: {},
-                    saveAsImage: {}
-                }
-            },
-            grid: {
-                left: '12%',
-                right: '5%'
-            },
-            xAxis: {
-                type: 'category',
-                boundaryGap: false,
-                data: ['2018', '2019', '2020', '2021', '2022'],
-                axisLabel: {
-                    color: 'white'
-                }
-            },
-            yAxis: {
-                type: 'value',
-                axisLabel: {
-                    formatter: '{value}',
-                    color: 'white'
-                }
-            },
-            series: [
-                {
-                    name: '割胶工人数',
-                    type: 'line',
-                    data: [],
-                    markPoint: {
-                        data: [
-                            { type: 'max', name: 'Max' },
-                            { type: 'min', name: 'Min' }
-                        ]
-                    },
+        var total = 2019529;
+        var y2018 = 401300;
+        var y2019 = 401300;
+        var y2020 = 402955;
+        var y2021 = 403055;
+        var y2022 = 410919;
+
+        var color = ['#1694f1', '#a8d68e', '#e0cb6f', '#6490f0', '#dca0ac'];
+
+        function newOption(count, name, color) {
+            return {
+                title: {
+                    text: name,
+                    left: 'center',
+                    top: '65%',
+                    textStyle: {
+                        fontSize: 18, // 标题字体大小
+                        color: '#fff', // 标题字体颜色
+                    }
                 },
-            ]
-        };
+                series: [{
+                    type: 'pie',
+                    hoverAnimation: false, // 关闭悬停交互
+                    radius: ['70%', '80%'],
+                    color: color,
+                    label: {
+                        normal: {
+                            position: 'center',
+                            formatter: count + '人',
+                            fontSize: 14,
+                            color: '#cccaca',
+                        }
+                    },
+                    data: [{
+                        value: count,
+                        name: name,
+                    }, {
+                        value: total,
+                        name: '',
+                        itemStyle: {
+                            normal: {
+                                color: 'rgba(255,255,255,.2)'
+                            },
+                        },
+                    }]
+                }]
+            };
+        }
 
-        $.ajax({
-            url: '/api/hainan-crops/rubber/getTappersCount',
-            type: 'GET',
-            dataType: 'json',
-            success: function (data) {
-                // 计算最大值和最小值
-                var maxValue = Math.ceil(Math.max.apply(null, data));
-                var minValue = Math.ceil(Math.min.apply(null, data));
-                // 计算间隔
-                var interval = Math.ceil((maxValue - minValue) / 5);
-
-                option.yAxis.max = maxValue;
-                option.yAxis.min = minValue;
-                option.yAxis.interval = interval;
-                option.series[0].data = data;
-
-                myChart.setOption(option);
-            },
-            error: function (error) {
-                console.log('Failed to fetch data:', error);
-            }
-        });
-
-        // 使用刚指定的配置项和数据显示图表。
-        window.addEventListener("resize", function () {
-            myChart.resize();
-        });
+        chart_6_1.setOption(newOption(y2018, '2018', color[0]));
+        chart_6_2.setOption(newOption(y2019, '2019', color[1]));
+        chart_6_3.setOption(newOption(y2020, '2020', color[2]));
+        chart_6_4.setOption(newOption(y2021, '2021', color[3]));
+        chart_6_5.setOption(newOption(y2022, '2022', color[4]));
     }
 
     function echart_7() {
