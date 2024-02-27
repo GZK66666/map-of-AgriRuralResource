@@ -1,7 +1,7 @@
 package com.catas.mapofAgriRuralResource.controller.tunchang;
 
-import com.catas.mapofAgriRuralResource.service.tunchang.BetelNutService;
-import com.catas.mapofAgriRuralResource.service.tunchang.RubberService;
+import com.catas.mapofAgriRuralResource.service.tunchang.TunchangBetelNutService;
+import com.catas.mapofAgriRuralResource.service.tunchang.TunchangRubberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,12 +14,12 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/crop")
-public class CropIndustryController {
+public class TunchangCropIndustryController {
     @Autowired
-    RubberService rubber;
+    TunchangRubberService rubber;
 
     @Autowired
-    BetelNutService betelNut;
+    TunchangBetelNutService betelNut;
 
     @GetMapping("/rubber/getRubberArea")
     public Map<String, Map<String, Integer>> getRubberArea() throws IOException {

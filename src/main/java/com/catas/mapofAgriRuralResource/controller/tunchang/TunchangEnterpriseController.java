@@ -1,8 +1,7 @@
 package com.catas.mapofAgriRuralResource.controller.tunchang;
 
-import com.catas.mapofAgriRuralResource.service.tunchang.EnterpriseService;
+import com.catas.mapofAgriRuralResource.service.tunchang.TunchangEnterpriseService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,9 +12,9 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/enterprise")
-public class EnterpriseController {
+public class TunchangEnterpriseController {
     @Autowired
-    EnterpriseService service;
+    TunchangEnterpriseService service;
 
     @GetMapping("/getFarmersProfessionalCooperativeByTown")
     public Map<String, Integer> getFarmersProfessionalCooperativeByTown() throws IOException {

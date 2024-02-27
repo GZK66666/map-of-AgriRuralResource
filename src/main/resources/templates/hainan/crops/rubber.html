@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>海南省天然橡胶资源数据一张图</title>
+    <link href="../../../static/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../static/css/base.css">
+    <link rel="stylesheet" href="../../../static/css/index.css">
+
+    <style>
+        .t_title{
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            font-size: 2.5em;
+            line-height: 80px;
+            color: #fff;
+        }
+        #chart_map{
+            cursor: pointer;
+            margin-top: 50px;
+        }
+
+        .header_nav {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .title-container {
+            z-index: 10000;
+        }
+
+        nav {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-top: 20px;
+            z-index: 10;
+        }
+
+        .options {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .options li {
+            margin-right: 60px;
+        }
+
+        .options li:last-child {
+            margin-right: 0;
+        }
+
+        .options li a {
+            text-decoration: none;
+            color: white;
+            padding: 5px 10px;
+            background-color: #2C58A6;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            white-space: nowrap; /* 阻止文本换行 */
+        }
+
+        .options li a.selected {
+            background-color: #5fa4ed;
+        }
+
+        .options li a:hover {
+            background-color: #5fa4ed;
+        }
+
+        .btn-group-container .btn-group {
+            margin-right: 10px;
+        }
+
+        .bottom_2 {
+            display: flex;
+        }
+
+        .btn-group {
+            position: absolute;
+            margin-left: 1.5%;
+            margin-top: 1%;
+            z-index: 10001;
+        }
+
+        .btn-group .btn-default {
+            background-color: #2C58A6;
+            border-color: #2C58A6;
+            color: #fff;
+        }
+
+        .btn-group .btn-default:hover {
+            background-color: #5fa4ed;
+            border-color: #5fa4ed;
+        }
+
+        .btn-group .caret {
+            border-top-color: #fff;
+        }
+
+        .btn-group .dropdown-menu {
+            background-color: #2C58A6;
+        }
+
+        .btn-group .dropdown-menu a {
+            color: #fff;
+        }
+
+        .btn-group .dropdown-menu a:hover {
+            background-color: #5fa4ed;
+        }
+
+        .btn-group.open .btn-default,
+        .btn-group.open .btn-default:focus {
+            background-color: #5fa4ed;
+            border-color: #5fa4ed;
+            color: #fff;
+        }
+
+        .btn-group.open .btn-default:hover {
+            background-color: #5fa4ed;
+            border-color: #5fa4ed;
+        }
+    </style>
+</head>
+<body>
+
+<!--header-->
+<div class="header">
+    <div class="bg_header">
+        <!-- 在标题上层容器中添加按钮 -->
+        <div class="header_nav">
+            <div class="title-container">
+                <div class="t_title">
+                    海南省天然橡胶资源数据一张图
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--main-->
+<div class="data_content">
+    <div class="data_main">
+        <div class="main_left fl">
+            <div class="left_1 t_btn6" style="cursor: pointer;">
+                <!--左上边框-->
+                <div class="t_line_box">
+                    <i class="t_l_line"></i>
+                    <i class="l_t_line"></i>
+                </div>
+                <!--右上边框-->
+                <div class="t_line_box">
+                    <i class="t_r_line"></i>
+                    <i class="r_t_line"></i>
+                </div>
+                <!--左下边框-->
+                <div class="t_line_box">
+                    <i class="l_b_line"></i>
+                    <i class="b_l_line"></i>
+                </div>
+                    <!--右下边框-->
+                    <div class="t_line_box">
+                    <i class="r_b_line"></i>
+                    <i class="b_r_line"></i>
+                </div>
+                <div class="main_title" id="left_1">
+                    <img src="../../../static/img/t_4.png" alt="">
+                  近年海南天然橡胶面积
+                </div>
+                <div id="chart_1" class="chart" style="width:100%;height: 280px;"></div>
+            </div>
+            <div class="left_2" style="cursor: pointer;">
+                <!--左上边框-->
+                <div class="t_line_box">
+                    <i class="t_l_line"></i>
+                    <i class="l_t_line"></i>
+                </div>
+                <!--右上边框-->
+                <div class="t_line_box">
+                    <i class="t_r_line"></i>
+                    <i class="r_t_line"></i>
+                </div>
+                <!--左下边框-->
+                <div class="t_line_box">
+                    <i class="l_b_line"></i>
+                    <i class="b_l_line"></i>
+                </div>
+                    <!--右下边框-->
+                    <div class="t_line_box">
+                    <i class="r_b_line"></i>
+                    <i class="b_r_line"></i>
+                </div>
+                <div class="main_title" id="left_2">
+                    <img src="../../../static/img/t_4.png" alt="">
+                    近年海南天然橡胶产量
+                </div>
+                <div id="chart_2" class="chart t_btn9" style="width:100%;height: 280px;"></div>
+            </div>
+        </div>
+        <div class="main_center fl">
+            <div class="center_text">
+                <!--左上边框-->
+                <div class="t_line_box">
+                    <i class="t_l_line"></i>
+                    <i class="l_t_line"></i>
+                </div>
+                <!--右上边框-->
+                <div class="t_line_box">
+                    <i class="t_r_line"></i>
+                    <i class="r_t_line"></i>
+                </div>
+                <!--左下边框-->
+                <div class="t_line_box">
+                    <i class="l_b_line"></i>
+                    <i class="b_l_line"></i>
+                </div>
+                 <!--右下边框-->
+                 <div class="t_line_box">
+                    <i class="r_b_line"></i>
+                    <i class="b_r_line"></i>
+                </div>
+                <div class="main_title" id="mapTitle">
+                    <img src="../../../static/img/t_3.png" alt="">
+                    <span class="title-text">
+                        2022年海南各市县天然橡胶年末面积分布
+                    </span>
+                </div>
+                <nav id="nav1">
+                    <ul class="options">
+                        <li><a data-type="年末面积分布">年末面积分布</a></li>
+                        <li><a data-type="总产量分布">总产量分布</a></li>
+                    </ul>
+                </nav>
+                <div id="chart_map" style="width:100%;height:610px;"></div>
+            </div>
+        </div>
+        <div class="main_right fr">
+            <div class="right_1">
+                <!--左上边框-->
+                <div class="t_line_box">
+                    <i class="t_l_line"></i>
+                    <i class="l_t_line"></i>
+                </div>
+                <!--右上边框-->
+                <div class="t_line_box">
+                    <i class="t_r_line"></i>
+                    <i class="r_t_line"></i>
+                </div>
+                <!--左下边框-->
+                <div class="t_line_box">
+                    <i class="l_b_line"></i>
+                    <i class="b_l_line"></i>
+                </div>
+                    <!--右下边框-->
+                    <div class="t_line_box">
+                    <i class="r_b_line"></i>
+                    <i class="b_r_line"></i>
+                </div>
+                <div class="main_title" id="right_1">
+                    <img src="../../../static/img/t_4.png" alt="">
+                    近年海南平均胶价
+                </div>
+                <div id="chart_3" class="chart t_btn9" style="width:100%;height: 280px;"></div>
+            </div>
+            <div class="right_2">
+                <!--左上边框-->
+                <div class="t_line_box">
+                    <i class="t_l_line"></i>
+                    <i class="l_t_line"></i>
+                </div>
+                <!--右上边框-->
+                <div class="t_line_box">
+                    <i class="t_r_line"></i>
+                    <i class="r_t_line"></i>
+                </div>
+                <!--左下边框-->
+                <div class="t_line_box">
+                    <i class="l_b_line"></i>
+                    <i class="b_l_line"></i>
+                </div>
+                    <!--右下边框-->
+                    <div class="t_line_box">
+                    <i class="r_b_line"></i>
+                    <i class="b_r_line"></i>
+                </div>
+                <div class="main_title" id="right_2">
+                    <img src="../../../static/img/t_4.png" alt="">
+                    近年海南割胶工人数
+                </div>
+                <div id="chart_6" class="echart fl t_btn4" style="width:100%;height: 280px;cursor: pointer;"></div>
+            </div>
+            <div class="right_3">
+                <!--左上边框-->
+                <div class="t_line_box">
+                    <i class="t_l_line"></i>
+                    <i class="l_t_line"></i>
+                </div>
+                <!--右上边框-->
+                <div class="t_line_box">
+                    <i class="t_r_line"></i>
+                    <i class="r_t_line"></i>
+                </div>
+                <!--左下边框-->
+                <div class="t_line_box">
+                    <i class="l_b_line"></i>
+                    <i class="b_l_line"></i>
+                </div>
+                <!--右下边框-->
+                <div class="t_line_box">
+                    <i class="r_b_line"></i>
+                    <i class="b_r_line"></i>
+                </div>
+                <div class="main_title">
+                    <img src="../../../static/img/t_4.png" alt="">
+                    海南各市县天然橡胶合作社
+                </div>
+                <div id="chart_4" class="echart fl t_btn4" style="width:100%;height: 280px;cursor: pointer;"></div>
+            </div>
+        </div>
+    </div>
+    <div class="data_bottom">
+        <div class="bottom_1 fl t_btn5" style="cursor: pointer;">
+            <!--左上边框-->
+            <div class="t_line_box">
+                <i class="t_l_line"></i>
+                <i class="l_t_line"></i>
+            </div>
+            <!--右上边框-->
+            <div class="t_line_box">
+                <i class="t_r_line"></i>
+                <i class="r_t_line"></i>
+            </div>
+            <!--左下边框-->
+            <div class="t_line_box">
+                <i class="l_b_line"></i>
+                <i class="b_l_line"></i>
+            </div>
+                <!--右下边框-->
+                <div class="t_line_box">
+                <i class="r_b_line"></i>
+                <i class="b_r_line"></i>
+            </div>
+            <div class="main_title">
+                <img src="../../../static/img/t_4.png" alt="">
+                近年海南天然橡胶产值
+            </div>
+            <div id="chart_5" class="echart fl" style="width:100%;height: 250px;margin-top: 15px;"></div>
+        </div>
+        <div class="bottom_center fl">
+            <div class="bottom_2 fl">
+                <!--左上边框-->
+                <div class="t_line_box">
+                    <i class="t_l_line"></i>
+                    <i class="l_t_line"></i>
+                </div>
+                <!--右上边框-->
+                <div class="t_line_box">
+                    <i class="t_r_line"></i>
+                    <i class="r_t_line"></i>
+                </div>
+                <!--左下边框-->
+                <div class="t_line_box">
+                    <i class="l_b_line"></i>
+                    <i class="b_l_line"></i>
+                </div>
+                    <!--右下边框-->
+                    <div class="t_line_box">
+                    <i class="r_b_line"></i>
+                    <i class="b_r_line"></i>
+                </div>
+                <div class="main_title" id="bottom_2">
+                    <img src="../../../static/img/t_4.png" alt="">
+                    全省各市县天然橡胶均价
+                </div>
+                <div class="btn-group" id="chart_7_date_button">
+                    <button type="button" id="dLabel1" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        2023-10 <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="#" data-date1="2023-04">2023-4</a></li>
+                        <li><a href="#" data-date1="2023-05">2023-5</a></li>
+                        <li><a href="#" data-date1="2023-06">2023-6</a></li>
+                        <li><a href="#" data-date1="2023-07">2023-7</a></li>
+                        <li><a href="#" data-date1="2023-08">2023-8</a></li>
+                        <li><a href="#" data-date1="2023-09">2023-9</a></li>
+                        <li><a href="#" data-date1="2023-10">2023-10</a></li>
+                        <li><a href="#" data-date1="2023-11">2023-11</a></li>
+                        <li><a href="#" data-date1="2023-12">2023-12</a></li>
+                    </ul>
+                </div>
+                <div id="chart_7" class="echart fl" style="width:100%;height: 250px;margin-top: 15px;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+<script src="../../../static/js/jquery-2.2.1.min.js"></script>
+<script src="../../../static/js/bootstrap.min.js"></script>
+<script src="../../../static/js/common.js"></script>
+<script src="../../../static/js/echarts.min.js"></script>
+<script src="../../../static/js/dataTool.js"></script>
+<script src="../../../static/js/hainan/crops/rubber/rubber.js"></script>
+<script src="../../../static/js/hainan/hainan.js"></script>
+<script src="../../../static/js/hainan/crops/rubber/chart_7_date_button.js"></script>
+<script src="../../../static/js/hainan/crops/rubber/heatmap_button.js"></script>
+
+</html>

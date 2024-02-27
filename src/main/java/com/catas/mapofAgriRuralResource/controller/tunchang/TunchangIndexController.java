@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/tunchang-agriculture-bigdata")
-public class IndexController {
+public class TunchangIndexController {
     @GetMapping("/index")
     public String index(Model model) {
         model.addAttribute("viewName", "ecom");

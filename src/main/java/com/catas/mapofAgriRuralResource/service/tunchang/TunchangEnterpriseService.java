@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class EnterpriseService {
+public class TunchangEnterpriseService {
     @Autowired
     ExcelReader reader;
 

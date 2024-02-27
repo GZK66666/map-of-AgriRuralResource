@@ -39,4 +39,15 @@ public class Constants {
     public static final int betelNutProcessingPointSheet = 4;
     public static final int betelNutCooperativeSheet = 5;
     public static final int betelNutAveragePriceSheet = 6;
+
+    // hainan data file path
+    public static final String hainanRubberDataFile = "data/hainan/rubber.xlsx";
+    public static final int rubberAreaSheet2 = 0;
+    public static final int rubberYieldSheet = 1;
+    public static final int rubberProductionSheet2 = 2;
+    public static final int rubberAvgPriceSheet = 3;
+    public static final int rubberTappersCountSheet = 4;
+    public static final int rubberCoopsByRegionSheet = 6;
+    public static final int rubberDistributionSheet = 7;
+    public static final int rubberAvgPriceByRegionSheet = 8;
 }

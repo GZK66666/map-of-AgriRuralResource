@@ -1,6 +1,6 @@
 package com.catas.mapofAgriRuralResource.controller.tunchang;
 
-import com.catas.mapofAgriRuralResource.service.tunchang.EcomService;
+import com.catas.mapofAgriRuralResource.service.tunchang.TunchangEcomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,9 +10,9 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/ecom")
-public class EcomController {
+public class TunchangEcomController {
     @Autowired
-    EcomService service;
+    TunchangEcomService service;
 
     @GetMapping("/getLandAreaByYear")
     public List<Map<String, Double>> getLandAreaByYear(@RequestParam int year) throws IOException {
