@@ -175,35 +175,37 @@ $(function () {
                 }
             },
             grid: {
-                left: '12%',
-                right: '5%'
+                left: '10%',
+                right: '8%',
+                top: '10%',
+                bottom: '12%'
             },
             xAxis: {
-                type: 'category',
-                boundaryGap: false,
-                data: ['2018', '2019', '2020', '2021', '2022'],
-                axisLabel: {
-                    color: 'white'
-                }
-            },
-            yAxis: {
                 type: 'value',
                 axisLabel: {
                     formatter: '{value}',
+                    color: 'white'
+                },
+                boundaryGap: [0, 0.01],
+                min: 290000,
+                max: 360000,
+                interval: 10000
+            },
+            yAxis: {
+                type: 'category',
+                data: ['2018', '2019', '2020', '2021', '2022'],
+                axisLabel: {
                     color: 'white'
                 }
             },
             series: [
                 {
                     name: '产量',
-                    type: 'line',
+                    type: 'bar',
+                    barWidth: '50%',
                     data: [],
-                    areaStyle: {},
-                    markPoint: {
-                        data: [
-                            { type: 'max', name: 'Max' },
-                            { type: 'min', name: 'Min' }
-                        ]
+                    label: {
+                        show: true
                     },
                 },
             ]
@@ -214,15 +216,6 @@ $(function () {
             type: 'GET',
             dataType: 'json',
             success: function (data) {
-                // 计算最大值和最小值
-                var maxValue = Math.ceil(Math.max.apply(null, data));
-                var minValue = Math.ceil(Math.min.apply(null, data));
-                // 计算间隔
-                var interval = Math.ceil((maxValue - minValue) / 5);
-
-                option.yAxis.max = maxValue;
-                option.yAxis.min = minValue;
-                option.yAxis.interval = interval;
                 option.series[0].data = data;
 
                 myChart.setOption(option);
@@ -359,7 +352,10 @@ $(function () {
                 axisLabel: {
                     formatter: '{value}',
                     color: 'white'
-                }
+                },
+                min: 9000,
+                max: 12500,
+                interval: 500
             },
             series: [
                 {
@@ -382,15 +378,6 @@ $(function () {
             type: 'GET',
             dataType: 'json',
             success: function (data) {
-                // 计算最大值和最小值
-                var maxValue = Math.ceil(Math.max.apply(null, data));
-                var minValue = Math.floor(Math.min.apply(null, data));
-                // 计算间隔
-                var interval = Math.ceil((maxValue - minValue) / 5);
-
-                option.yAxis.max = maxValue;
-                option.yAxis.min = minValue;
-                option.yAxis.interval = interval;
                 option.series[0].data = data;
 
                 myChart.setOption(option);
@@ -528,7 +515,10 @@ $(function () {
                 axisLabel: {
                     formatter: '{value}',
                     color: 'white'
-                }
+                },
+                min: 300000,
+                max: 450000,
+                interval: 30000
             },
             series: [
                 {
@@ -552,15 +542,6 @@ $(function () {
             type: 'GET',
             dataType: 'json',
             success: function (data) {
-                // 计算最大值和最小值
-                var maxValue = Math.ceil(Math.max.apply(null, data));
-                var minValue = Math.ceil(Math.min.apply(null, data));
-                // 计算间隔
-                var interval = Math.ceil((maxValue - minValue) / 5);
-
-                option.yAxis.max = maxValue;
-                option.yAxis.min = minValue;
-                option.yAxis.interval = interval;
                 option.series[0].data = data;
 
                 myChart.setOption(option);
