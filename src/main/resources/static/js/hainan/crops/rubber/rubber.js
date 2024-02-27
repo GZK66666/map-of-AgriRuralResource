@@ -31,7 +31,8 @@ $(function () {
                 data: ['年末面积', '收获面积', '新种面积'],
                 top: '8%',
                 textStyle: {
-                    color: 'white'
+                    color: 'white',
+                    fontSize: '14'
                 }
             },
             grid: {
@@ -65,7 +66,8 @@ $(function () {
                         color: 'white'
                     },
                     nameTextStyle: {
-                        color: 'white'
+                        color: 'white',
+                        fontSize: 14
                     }
                 },
                 {
@@ -79,7 +81,8 @@ $(function () {
                         color: 'white'
                     },
                     nameTextStyle: {
-                        color: 'white' // 设置 y 轴名称的字体颜色为白色
+                        color: 'white', // 设置 y 轴名称的字体颜色为白色
+                        fontSize: 14
                     }
                 }
             ],
@@ -288,7 +291,7 @@ $(function () {
                         show: true,
                         position: 'inside',
                         color: 'black',
-                        fontSize: 12,
+                        fontSize: 14,
                     },
                     itemStyle: {
                         opacity: 1,
@@ -500,7 +503,9 @@ $(function () {
             },
             grid: {
                 left: '12%',
-                right: '5%'
+                right: '5%',
+                top: '10%',
+                bottom: '10%'
             },
             xAxis: {
                 type: 'category',
@@ -629,7 +634,8 @@ $(function () {
                 data: ['各市县收购均价', '全省均价'],
                 top: '8%',
                 textStyle: {
-                    color: 'white'
+                    color: 'white',
+                    fontSize: 16
                 }
             },
             grid: {

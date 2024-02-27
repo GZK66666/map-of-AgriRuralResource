@@ -79,7 +79,7 @@
                             show: true,
                             position: 'inside',
                             color: 'black',
-                            fontSize: 12,
+                            fontSize: 14,
                         },
                         itemStyle: {
                             opacity: 1,
