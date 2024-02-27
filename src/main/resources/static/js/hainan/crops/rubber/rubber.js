@@ -195,7 +195,7 @@ $(function () {
             },
             series: [
                 {
-                    name: '天然橡胶产量',
+                    name: '产量',
                     type: 'line',
                     data: [],
                     areaStyle: {},
@@ -532,7 +532,7 @@ $(function () {
             },
             series: [
                 {
-                    name: '天然橡胶年末总产值',
+                    name: '总产值',
                     type: 'line',
                     data: [],
                     areaStyle: {}, // 面积
