@@ -6,7 +6,7 @@ function rubber_update() {
 
 function rubber_update_chart1() {
     var title = document.getElementById('left_1');
-    title.innerHTML = '<img src="../../static/img/t_4.png" alt="">近年海南天然橡胶面积情况';
+    title.innerHTML = '<img src="../../static/img/t_4.png" alt="">近年天然橡胶面积情况';
 
     // 基于准备好的dom，初始化echarts实例
     var myChart = echarts.init(document.getElementById('chart_1'));
@@ -147,7 +147,7 @@ function rubber_update_chart1() {
 
 function rubber_update_chart2() {
     var title = document.getElementById('left_2');
-    title.innerHTML = '<img src="../../static/img/t_4.png" alt="">近年海南天然橡胶产量情况';
+    title.innerHTML = '<img src="../../static/img/t_4.png" alt="">近年天然橡胶产量情况';
 
     // 基于准备好的dom，初始化echarts实例
     var myChart = echarts.init(document.getElementById('chart_2'));
@@ -236,7 +236,7 @@ function rubber_update_chart2() {
 
 function rubber_update_chart5() {
     var title = document.getElementById('left_3');
-    title.innerHTML = '<img src="../../static/img/t_4.png" alt="">近年海南天然橡胶产值情况';
+    title.innerHTML = '<img src="../../static/img/t_4.png" alt="">近年天然橡胶产值情况';
 
     // 基于准备好的dom，初始化echarts实例
     var myChart = echarts.init(document.getElementById('chart_5'));
