@@ -50,4 +50,7 @@ public class Constants {
     public static final int rubberCoopsByRegionSheet = 6;
     public static final int rubberDistributionSheet = 7;
     public static final int rubberAvgPriceByRegionSheet = 8;
+
+    public static final String hainanAquaFarmingDataFile = "data/hainan/水产养殖.xlsx";
+    public static final int aquaFarmingMaricultureAreaSheet = 0;
 }

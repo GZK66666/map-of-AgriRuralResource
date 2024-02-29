@@ -1,4 +1,4 @@
-package com.catas.mapofAgriRuralResource.service.hainan.crops;
+package com.catas.mapofAgriRuralResource.service.hainan;
 
 import com.catas.mapofAgriRuralResource.utils.Constants;
 import com.catas.mapofAgriRuralResource.utils.ExcelReader;

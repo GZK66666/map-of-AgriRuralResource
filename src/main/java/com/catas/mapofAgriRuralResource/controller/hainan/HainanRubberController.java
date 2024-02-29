@@ -1,6 +1,6 @@
 package com.catas.mapofAgriRuralResource.controller.hainan;
 
-import com.catas.mapofAgriRuralResource.service.hainan.crops.HainanRubberService;
+import com.catas.mapofAgriRuralResource.service.hainan.HainanRubberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
