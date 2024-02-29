@@ -2,6 +2,7 @@ function rubber_update() {
     rubber_update_chart1();
     rubber_update_chart2();
     rubber_update_chart3();
+    rubber_update_chart4();
     rubber_update_chart5();
     rubber_update_chart6();
 }
@@ -490,4 +491,86 @@ function rubber_update_chart6() {
     chart_6_3.setOption(newOption(y2020, '2020', color[2]));
     chart_6_4.setOption(newOption(y2021, '2021', color[3]));
     chart_6_5.setOption(newOption(y2022, '2022', color[4]));
+}
+
+function rubber_update_chart4() {
+    var title = document.getElementById('right_3');
+    title.innerHTML = '<img src="../../static/img/t_4.png" alt="">各市县天然橡胶合作社情况';
+
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('chart_4'));
+    myChart.dispose();
+    myChart = echarts.init(document.getElementById('chart_4'));
+
+    var option = {
+        grid: {
+            top: '20%',
+            bottom: '19%'
+        },
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'shadow'
+            },
+            formatter: "{b} : {c}家"
+        },
+        xAxis: {
+            type: 'category',
+            data: [],
+            axisLabel: {
+                interval: 0,  // 设置刻度标签全部显示
+                rotate: 45,   // 设置刻度标签旋转角度
+                textStyle: {
+                    color: 'white'  // 设置刻度标签文字颜色
+                }
+            }
+        },
+        yAxis: {
+            type: 'value',
+            axisLabel: {
+                color: 'white'
+            }
+        },
+        series: [
+            {
+                name: '天然橡胶合作社数量',
+                data: [],
+                type: 'bar',
+            }
+        ]
+    };
+
+    $.ajax({
+        url: '/api/hainan-crops/rubber/getCoopsCntByRegion',
+        type: 'GET',
+        dataType: 'json',
+        success: function (data) {
+            // 将Map转换为数组形式，方便后续操作
+            var dataArray = Object.entries(data);
+
+            // 按降序排序
+            dataArray.sort(function (a, b) {
+                return b[1] - a[1];
+            });
+
+            // 将排序后的数据设置到 option 中
+            option.xAxis.data = dataArray.map(function (item) {
+                return item[0];
+            });
+
+            option.series[0].data = dataArray.map(function (item) {
+                return item[1];
+            });
+
+            myChart.setOption(option);
+        },
+        error: function (error) {
+            console.log('Failed to fetch data:', error);
+        }
+    });
+
+    // 使用刚指定的配置项和数据显示图表。
+    window.addEventListener("resize", function () {
+        myChart.resize();
+    });
 }

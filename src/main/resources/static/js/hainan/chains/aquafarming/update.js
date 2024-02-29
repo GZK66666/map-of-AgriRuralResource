@@ -2,6 +2,7 @@ function aquafarming_update() {
     aquafarming_update_chart1();
     aquafarming_update_chart2();
     aquafarming_update_chart3();
+    aquafarming_update_chart4();
     aquafarming_update_chart5();
     aquafarming_update_chart6();
 }
@@ -429,6 +430,95 @@ function aquafarming_update_chart6() {
 
     $.ajax({
         url: '/api/hainan-crops/aquaFarming/getMaricultureProduction',
+        type: 'GET',
+        dataType: 'json',
+        success: function (data) {
+            option.series[0].data = data;
+
+            myChart.setOption(option);
+        },
+        error: function (error) {
+            console.log('Failed to fetch data:', error);
+        }
+    });
+
+    // 使用刚指定的配置项和数据显示图表。
+    window.addEventListener("resize", function () {
+        myChart.resize();
+    });
+}
+
+function aquafarming_update_chart4() {
+    var title = document.getElementById('right_3');
+    title.innerHTML = '<img src="../../static/img/t_4.png" alt="">近年淡水产品总产量情况';
+
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('chart_4'));
+    myChart.dispose();
+    myChart = echarts.init(document.getElementById('chart_4'));
+
+    var option = {
+        tooltip: {
+            trigger: 'axis',
+            formatter: function (params) {
+                var result = params[0].name + '<br>';
+                params.forEach(function (item) {
+                    result += item.seriesName + ': ' + item.value + ' 万吨<br>'; // 在这里添加公顷后缀
+                });
+                return result;
+            }
+        },
+        toolbox: {
+            show: false, // 右上角的选项
+            feature: {
+                dataZoom: {
+                    yAxisIndex: 'none'
+                },
+                dataView: { readOnly: false },
+                magicType: { type: ['line', 'bar'] },
+                restore: {},
+                saveAsImage: {}
+            }
+        },
+        grid: {
+            left: '10%',
+            right: '8%',
+            top: '10%',
+            bottom: '12%'
+        },
+        xAxis: {
+            type: 'value',
+            axisLabel: {
+                formatter: '{value}',
+                color: 'white'
+            },
+            boundaryGap: [0, 0.01],
+            min: 35,
+            max: 45,
+            interval: 2
+        },
+        yAxis: {
+            type: 'category',
+            data: ['2018', '2019', '2020', '2021', '2022'],
+            axisLabel: {
+                color: 'white'
+            }
+        },
+        series: [
+            {
+                name: '产量',
+                type: 'bar',
+                barWidth: '50%',
+                data: [],
+                label: {
+                    show: true
+                },
+            },
+        ]
+    };
+
+    $.ajax({
+        url: '/api/hainan-crops/aquaFarming/getAquacultureProduction',
         type: 'GET',
         dataType: 'json',
         success: function (data) {
