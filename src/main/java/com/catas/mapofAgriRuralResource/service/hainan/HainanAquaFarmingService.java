@@ -2,12 +2,14 @@ package com.catas.mapofAgriRuralResource.service.hainan;
 
 import com.catas.mapofAgriRuralResource.utils.Constants;
 import com.catas.mapofAgriRuralResource.utils.ExcelReader;
+import org.apache.poi.hpsf.Decimal;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +20,8 @@ public class HainanAquaFarmingService {
     @Autowired
     ExcelReader reader;
 
+    private static final DecimalFormat DF = new DecimalFormat("#.00");
+
     public List<Double> getMaricultureArea() throws IOException {
         List<Double> result = new ArrayList<>();
 
@@ -26,7 +30,7 @@ public class HainanAquaFarmingService {
         for (int rowIndex = 1; rowIndex < 6; rowIndex++) {
             Row data = sheet.getRow(rowIndex);
 
-            result.add(data.getCell(1).getNumericCellValue());
+            result.add(Double.valueOf(DF.format(data.getCell(1).getNumericCellValue())));
         }
 
         return result;
@@ -40,7 +44,7 @@ public class HainanAquaFarmingService {
         for (int rowIndex = 1; rowIndex < 6; rowIndex++) {
             Row data = sheet.getRow(rowIndex);
 
-            result.add(data.getCell(1).getNumericCellValue());
+            result.add(Double.valueOf(DF.format(data.getCell(1).getNumericCellValue())));
         }
 
         return result;
@@ -54,7 +58,7 @@ public class HainanAquaFarmingService {
         for (int rowIndex = 1; rowIndex < 6; rowIndex++) {
             Row data = sheet.getRow(rowIndex);
 
-            result.put(data.getCell(0).getStringCellValue(), data.getCell(1).getNumericCellValue());
+            result.put(data.getCell(0).getStringCellValue(), Double.valueOf(DF.format(data.getCell(1).getNumericCellValue())));
         }
 
         return result;
@@ -68,7 +72,7 @@ public class HainanAquaFarmingService {
         for (int rowIndex = 1; rowIndex < 6; rowIndex++) {
             Row data = sheet.getRow(rowIndex);
 
-            result.add(data.getCell(1).getNumericCellValue());
+            result.add(Double.valueOf(DF.format(data.getCell(1).getNumericCellValue())));
         }
 
         return result;
@@ -82,7 +86,7 @@ public class HainanAquaFarmingService {
         for (int rowIndex = 1; rowIndex < 6; rowIndex++) {
             Row data = sheet.getRow(rowIndex);
 
-            result.add(data.getCell(1).getNumericCellValue());
+            result.add(Double.valueOf(DF.format(data.getCell(1).getNumericCellValue())));
         }
 
         return result;
@@ -96,7 +100,7 @@ public class HainanAquaFarmingService {
         for (int rowIndex = 1; rowIndex < 6; rowIndex++) {
             Row data = sheet.getRow(rowIndex);
 
-            result.add(data.getCell(1).getNumericCellValue());
+            result.add(Double.valueOf(DF.format(data.getCell(1).getNumericCellValue())));
         }
 
         return result;
@@ -110,7 +114,7 @@ public class HainanAquaFarmingService {
         for (int rowIndex = 1; rowIndex < 6; rowIndex++) {
             Row data = sheet.getRow(rowIndex);
 
-            result.put(data.getCell(0).getStringCellValue(), data.getCell(1).getNumericCellValue());
+            result.put(data.getCell(0).getStringCellValue(), Double.valueOf(DF.format(data.getCell(1).getNumericCellValue())));
         }
 
         return result;
@@ -126,7 +130,7 @@ public class HainanAquaFarmingService {
 
             // columnIndex: 1-海水养殖面积 2-淡水养殖面积 3-海水养殖产量 4-淡水养殖产量
             String town = data.getCell(0).getStringCellValue().replaceAll("[市县]", "");
-            double value = data.getCell(columnIndex).getNumericCellValue();
+            double value = Double.parseDouble(DF.format(data.getCell(columnIndex).getNumericCellValue()));
             if (value != 0) {
                 result.put(town, value);
             }
