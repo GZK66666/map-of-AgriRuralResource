@@ -213,7 +213,8 @@ function aquafarming_update_chart5() {
             left: 'center',
             top: '90%',
             textStyle: {
-                color: 'white'
+                color: 'white',
+                fontSize: 14
             }
         },
         series: [
@@ -227,7 +228,8 @@ function aquafarming_update_chart5() {
                     show: true,
                     formatter: '{b}',
                     textStyle: {
-                        color: 'white'  // 将文字颜色设置为白色
+                        color: 'white',  // 将文字颜色设置为白色
+                        fontSize: 14
                     }
                 },
                 emphasis: {
