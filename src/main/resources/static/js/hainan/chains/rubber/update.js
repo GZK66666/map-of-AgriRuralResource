@@ -3,6 +3,7 @@ function rubber_update() {
     rubber_update_chart2();
     rubber_update_chart3();
     rubber_update_chart5();
+    rubber_update_chart6();
 }
 
 function rubber_update_chart1() {
@@ -416,4 +417,77 @@ function rubber_update_chart3() {
     window.addEventListener("resize", function () {
         myChart.resize();
     });
+}
+
+function rubber_update_chart6() {
+    var title = document.getElementById('right_2');
+    title.innerHTML = '<img src="../../static/img/t_4.png" alt="">近年割胶工人数情况';
+    var chart = document.getElementById('chart_6');
+    chart.innerHTML = '<div id="chart_6_1" class="echart fl t_btn4" style="width:20%;height: 280px;cursor: pointer;"></div>\n' +
+        '                    <div id="chart_6_2" class="echart fl t_btn4" style="width:20%;height: 280px;cursor: pointer;"></div>\n' +
+        '                    <div id="chart_6_3" class="echart fl t_btn4" style="width:20%;height: 280px;cursor: pointer;"></div>\n' +
+        '                    <div id="chart_6_4" class="echart fl t_btn4" style="width:20%;height: 280px;cursor: pointer;"></div>\n' +
+        '                    <div id="chart_6_5" class="echart fl t_btn4" style="width:20%;height: 280px;cursor: pointer;"></div>'
+
+
+    var chart_6_1 = echarts.init(document.getElementById('chart_6_1'));
+    var chart_6_2 = echarts.init(document.getElementById('chart_6_2'));
+    var chart_6_3 = echarts.init(document.getElementById('chart_6_3'));
+    var chart_6_4 = echarts.init(document.getElementById('chart_6_4'));
+    var chart_6_5 = echarts.init(document.getElementById('chart_6_5'));
+
+    var total = 2019529;
+    var y2018 = 401300;
+    var y2019 = 401300;
+    var y2020 = 402955;
+    var y2021 = 403055;
+    var y2022 = 410919;
+
+    var color = ['#1694f1', '#a8d68e', '#e0cb6f', '#6490f0', '#dca0ac'];
+
+    function newOption(count, name, color) {
+        return {
+            title: {
+                text: name,
+                left: 'center',
+                top: '65%',
+                textStyle: {
+                    fontSize: 18, // 标题字体大小
+                    color: '#fff', // 标题字体颜色
+                }
+            },
+            series: [{
+                type: 'pie',
+                hoverAnimation: false, // 关闭悬停交互
+                radius: ['70%', '80%'],
+                color: color,
+                label: {
+                    normal: {
+                        position: 'center',
+                        formatter: count + '人',
+                        fontSize: 14,
+                        color: '#cccaca',
+                    }
+                },
+                data: [{
+                    value: count,
+                    name: name,
+                }, {
+                    value: total,
+                    name: '',
+                    itemStyle: {
+                        normal: {
+                            color: 'rgba(255,255,255,.2)'
+                        },
+                    },
+                }]
+            }]
+        };
+    }
+
+    chart_6_1.setOption(newOption(y2018, '2018', color[0]));
+    chart_6_2.setOption(newOption(y2019, '2019', color[1]));
+    chart_6_3.setOption(newOption(y2020, '2020', color[2]));
+    chart_6_4.setOption(newOption(y2021, '2021', color[3]));
+    chart_6_5.setOption(newOption(y2022, '2022', color[4]));
 }
