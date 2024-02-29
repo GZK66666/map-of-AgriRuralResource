@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/hainan-crops/aquaFarming")
@@ -23,5 +24,10 @@ public class HainanAquaFarmingController {
     @GetMapping("/getAquacultureArea")
     public List<Double> getAquacultureArea() throws IOException {
         return service.getAquacultureArea();
+    }
+
+    @GetMapping("/getMaricultureAreaDistribution")
+    public Map<String, Double> getMaricultureAreaDistribution() throws IOException {
+        return service.getMaricultureAreaDistribution();
     }
 }

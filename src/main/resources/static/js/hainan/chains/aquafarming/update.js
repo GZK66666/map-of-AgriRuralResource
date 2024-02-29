@@ -1,12 +1,13 @@
 function aquafarming_update() {
     aquafarming_update_chart1();
     aquafarming_update_chart2();
+    aquafarming_update_chart5();
 }
 
 function aquafarming_update_chart1() {
     // 更新title
     var title = document.getElementById('left_1');
-    title.innerHTML = '<img src="../../static/img/t_4.png" alt="">近年海南海水养殖面积情况';
+    title.innerHTML = '<img src="../../static/img/t_4.png" alt="">近年海水养殖面积情况';
 
     // 更新图表
     // 先摧毁之前的chart，再重新创建
@@ -100,7 +101,7 @@ function aquafarming_update_chart1() {
 
 function aquafarming_update_chart2() {
     var title = document.getElementById('left_2');
-    title.innerHTML = '<img src="../../static/img/t_4.png" alt="">近年海南淡水养殖面积情况';
+    title.innerHTML = '<img src="../../static/img/t_4.png" alt="">近年淡水养殖面积情况';
 
 
     var myChart = echarts.init(document.getElementById('chart_2'));
@@ -172,8 +173,81 @@ function aquafarming_update_chart2() {
         dataType: 'json',
         success: function (data) {
             option.series[0].data = data;
-            console.log(data);
 
+            myChart.setOption(option);
+        },
+        error: function (error) {
+            console.log('Failed to fetch data:', error);
+        }
+    });
+
+    // 使用刚指定的配置项和数据显示图表。
+    window.addEventListener("resize", function () {
+        myChart.resize();
+    });
+}
+
+function aquafarming_update_chart5() {
+    var title = document.getElementById('left_3');
+    title.innerHTML = '<img src="../../static/img/t_4.png" alt="">近年海水养殖各类面积占比情况';
+
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('chart_5'));
+    myChart.dispose();
+    myChart = echarts.init(document.getElementById('chart_5'));
+
+    var option = {
+        tooltip: {
+            trigger: 'item',
+            formatter: "{a} <br/>{b} : {c}万亩"
+        },
+        legend: {
+            orient: 'horizontal',
+            left: 'center',
+            top: '90%',
+            textStyle: {
+                color: 'white'
+            }
+        },
+        series: [
+            {
+                name: '',
+                type: 'pie',
+                radius: '50%',
+                center: ['50%', '45%'],  // 饼图的位置
+                data: [],
+                label: {
+                    show: true,
+                    formatter: '{b}',
+                    textStyle: {
+                        color: 'white'  // 将文字颜色设置为白色
+                    }
+                },
+                emphasis: {
+                    itemStyle: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(248,242,242,0.5)'
+                    }
+                }
+            }
+        ]
+    };
+
+    $.ajax({
+        url: '/api/hainan-crops/aquaFarming/getMaricultureAreaDistribution',
+        type: 'GET',
+        dataType: 'json',
+        success: function (data) {
+            var countData = Object.entries(data).map(([town, count], index) => {
+                // 设置不同的颜色，可以根据需要修改颜色值
+                var colors = ['#1694f1', '#e0cb6f', '#6490f0', '#a8d68e', '#dca0ac'];
+                var color = colors[index % colors.length];
+
+                return { name: town, value: count, itemStyle: { normal: { color: color } } };
+            });
+
+            option.series[0].data = countData;
             myChart.setOption(option);
         },
         error: function (error) {

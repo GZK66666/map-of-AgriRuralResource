@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class HainanAquaFarmingService {
@@ -39,6 +41,20 @@ public class HainanAquaFarmingService {
             Row data = sheet.getRow(rowIndex);
 
             result.add(data.getCell(1).getNumericCellValue());
+        }
+
+        return result;
+    }
+
+    public Map<String, Double> getMaricultureAreaDistribution() throws IOException {
+        Map<String, Double> result = new HashMap<>();
+
+        Sheet sheet = reader.ReadSheetFromFile(Constants.hainanAquaFarmingDataFile, Constants.aquaFarmingMaricultureAreaDistributionSheet);
+
+        for (int rowIndex = 1; rowIndex < 6; rowIndex++) {
+            Row data = sheet.getRow(rowIndex);
+
+            result.put(data.getCell(0).getStringCellValue(), data.getCell(1).getNumericCellValue());
         }
 
         return result;
