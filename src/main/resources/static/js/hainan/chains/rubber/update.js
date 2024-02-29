@@ -6,6 +6,7 @@ function rubber_update() {
     rubber_update_chart5();
     rubber_update_chart6();
     rubber_update_chart7();
+    rubber_update_heatmap();
 }
 
 function rubber_update_chart1() {
@@ -705,6 +706,91 @@ function rubber_update_chart7() {
             console.log('Failed to fetch data:', error);
         }
     });
+
+    // 使用刚指定的配置项和数据显示图表。
+    window.addEventListener("resize", function () {
+        myChart.resize();
+    });
+}
+
+function rubber_update_heatmap() {
+    var title = document.getElementById('mapTitle');
+    title.innerHTML = '<img src="../../static/img/t_3.png" alt="">2022年各市县天然橡胶生产情况';
+    var nav1 = document.getElementById('nav1');
+    nav1.innerHTML = '<ul class="options">\n' +
+        '                        <li><a data-type="年末面积分布">年末面积</a></li>\n' +
+        '                        <li><a data-type="总产量分布">总产量</a></li>\n' +
+        '                    </ul>'
+    listen_rubber_heatmap_button();
+
+    var myChart = echarts.init(document.getElementById('chart_map'));
+    myChart.dispose();
+    myChart = echarts.init(document.getElementById('chart_map'));
+    // 发送请求获取后端数据
+    $.ajax({
+        url: '/api/hainan-crops/rubber/get2022EndYearAreaOrProduction?index=1', // 默认显示年末面积
+        type: 'GET',
+        dataType: 'json',
+        success: function (data) {
+            var maxArea = 0;
+            var townData = [];
+
+            for (var townName in data) {
+                var landArea = data[townName];
+                if (landArea > maxArea) {
+                    maxArea = landArea;
+                }
+                townData.push({ name: townName, value: landArea });
+            }
+
+            // 显示地图，并传入最大面积值
+            showProvince(townData, maxArea);
+        },
+        error: function (error) {
+            console.log('Failed to fetch data:', error);
+        }
+    });
+
+    function showProvince(townData, max) {
+        myChart.setOption(option = {
+            visualMap: {
+                show: true,
+                min: 0,
+                max: max, // 根据实际数据范围设置
+                calculable: true,
+                inRange: {
+                    color: ['rgb(240,240,203)', '#c4452d'] // 浅白色到深蓝色
+                },
+                textStyle: {
+                    color: 'white',
+                    fontSize: 12,
+                },
+                left: 180,
+                top: 350,
+            },
+            series: [{
+                type: 'map',
+                mapType: 'hainan',
+                roam: false, // 禁用地图拖动
+                top: '7%',
+                data: townData,
+                label: {
+                    show: true,
+                    position: 'inside',
+                    color: 'black',
+                    fontSize: 14,
+                },
+                itemStyle: {
+                    opacity: 1,
+                    borderWidth: 0.5,
+                },
+            }],
+            tooltip: {
+                trigger: 'item',
+                formatter: '{b}: {c}万亩',
+            },
+        });
+    }
 
     // 使用刚指定的配置项和数据显示图表。
     window.addEventListener("resize", function () {

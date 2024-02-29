@@ -115,4 +115,23 @@ public class HainanAquaFarmingService {
 
         return result;
     }
+
+    public Map<String, Double> getDistribution(int columnIndex) throws IOException {
+        Map<String, Double> result = new HashMap<>();
+
+        Sheet sheet = reader.ReadSheetFromFile(Constants.hainanAquaFarmingDataFile, Constants.aquaFarmingDistributionSheet);
+
+        for (int rowIndex = 1; rowIndex < 19; rowIndex++) {
+            Row data = sheet.getRow(rowIndex);
+
+            // columnIndex: 1-海水养殖面积 2-淡水养殖面积 3-海水养殖产量 4-淡水养殖产量
+            String town = data.getCell(0).getStringCellValue().replaceAll("[市县]", "");
+            double value = data.getCell(columnIndex).getNumericCellValue();
+            if (value != 0) {
+                result.put(town, value);
+            }
+        }
+
+        return result;
+    }
 }

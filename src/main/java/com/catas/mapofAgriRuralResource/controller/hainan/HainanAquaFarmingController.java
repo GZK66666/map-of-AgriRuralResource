@@ -4,6 +4,7 @@ import com.catas.mapofAgriRuralResource.service.hainan.HainanAquaFarmingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
@@ -49,5 +50,10 @@ public class HainanAquaFarmingController {
     @GetMapping("/getProductionDistribution")
     public Map<String, Double> getProductionDistribution() throws IOException {
         return service.getProductionDistribution();
+    }
+
+    @GetMapping("/getDistribution")
+    public Map<String, Double> getDistribution(@RequestParam int index) throws IOException {
+        return service.getDistribution(index);
     }
 }
