@@ -77,8 +77,34 @@
             background-color: #5fa4ed;
         }
 
+        .btn-group-container {
+            text-align: center;
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+
         .btn-group-container .btn-group {
             margin-right: 10px;
+        }
+
+        .btn.custom-btn {
+            font-size: 18px;
+            font-weight: 600;
+            color: #fff;
+            margin-top: -2px;
+            margin-right: -6px;
+        }
+
+        /* 自定义按钮的样式 */
+        .custom-btn {
+            background-color: #2C58A6; /* 设置按钮背景颜色 */
+            color: white; /* 设置按钮文字颜色 */
+        }
+
+        /* 被选中按钮的样式 */
+        .custom-btn.selected {
+            background-color: #5fa4ed; /* 设置被选中按钮背景颜色 */
+            color: white; /* 设置被选中按钮文字颜色 */
         }
 
         .bottom_2 {
@@ -146,6 +172,42 @@
             </div>
         </div>
     </div>
+</div>
+
+<div class="btn-group-container">
+
+    <button class="btn custom-btn" id="prevBtn" style="margin-right: 50px">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+    </button>
+
+    <button class="btn custom-btn" id="chain1" style="margin-right: 50px">
+        <span class="glyphicon glyphicon-tree-conifer" aria-hidden="true"></span> 水稻
+    </button>
+
+    <button class="btn custom-btn" id="chain2" style="margin-right: 50px">
+        <span class="glyphicon glyphicon-tree-conifer" aria-hidden="true"></span> 冬季瓜菜
+    </button>
+
+    <button class="btn custom-btn" id="chain3" style="margin-right: 50px">
+        <span class="glyphicon glyphicon-tree-conifer" aria-hidden="true"></span> 水产养殖
+    </button>
+
+    <button class="btn custom-btn" id="chain4" style="margin-right: 50px">
+        <span class="glyphicon glyphicon-tree-conifer" aria-hidden="true"></span> 文昌鸡
+    </button>
+
+    <button class="btn custom-btn" id="chain5" style="margin-right: 50px">
+        <span class="glyphicon glyphicon-tree-conifer" aria-hidden="true"></span> 天然橡胶
+    </button>
+
+    <button class="btn custom-btn" id="chain6" style="margin-right: 50px">
+        <span class="glyphicon glyphicon-tree-conifer" aria-hidden="true"></span> 地瓜
+    </button>
+
+    <button class="btn custom-btn" id="nextBtn">
+        <span class="glyphicon glyphicon-chevron-right"></span>
+    </button>
+
 </div>
 
 <!--main-->
@@ -414,9 +476,12 @@
 <script src="../../static/js/common.js"></script>
 <script src="../../static/js/echarts.min.js"></script>
 <script src="../../static/js/dataTool.js"></script>
-<script src="../../static/js/hainan/crops/rubber/rubber.js"></script>
+<script src="../../static/js/hainan/chains/rubber/rubber.js"></script>
 <script src="../../static/js/hainan/hainan.js"></script>
-<script src="../../static/js/hainan/crops/rubber/chart_7_date_button.js"></script>
-<script src="../../static/js/hainan/crops/rubber/heatmap_button.js"></script>
+<script src="../../static/js/hainan/chains/rubber/chart_7_date_button.js"></script>
+<script src="../../static/js/hainan/chains/rubber/heatmap_button.js"></script>
+<script src="../../static/js/hainan/chains_button.js"></script>
+<script src="../../static/js/hainan/chains/rubber/update.js"></script>
+<script src="../../static/js/hainan/chains/aquafarming/update.js"></script>
 
 </html>
