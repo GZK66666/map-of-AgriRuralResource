@@ -5,6 +5,7 @@ function aquafarming_update() {
     aquafarming_update_chart4();
     aquafarming_update_chart5();
     aquafarming_update_chart6();
+    aquafarming_update_chart7();
 }
 
 function aquafarming_update_chart1() {
@@ -526,6 +527,101 @@ function aquafarming_update_chart4() {
 
             myChart.setOption(option);
         },
+        error: function (error) {
+            console.log('Failed to fetch data:', error);
+        }
+    });
+
+    // 使用刚指定的配置项和数据显示图表。
+    window.addEventListener("resize", function () {
+        myChart.resize();
+    });
+}
+
+function aquafarming_update_chart7() {
+    var title = document.getElementById('bottom_2');
+    title.innerHTML = '<img src="../../static/img/t_4.png" alt="">2022年各品类产量情况';
+    var divElement = document.getElementById('chart_7_date_button');
+    divElement.style.display = 'none';
+
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('chart_7'));
+    myChart.dispose();
+    myChart = echarts.init(document.getElementById('chart_7'));
+
+    var option = {
+        grid: {
+            top: '30%',
+            bottom: '19%',
+            left: '5%',
+            right: '5%',
+        },
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'shadow'
+            },
+            formatter: "{b} : {c}万吨"
+        },
+        xAxis: {
+            type: 'category',
+            data: [],
+            axisLabel: {
+                interval: 0,  // 设置刻度标签全部显示
+                textStyle: {
+                    color: 'white',  // 设置刻度标签文字颜色
+                    fontSize: 14
+                }
+            }
+        },
+        yAxis: {
+            type: 'value',
+            axisLabel: {
+                color: 'white',
+                fontSize: 14
+            }
+        },
+        series: [
+            {
+                name: '产量',
+                data: [],
+                type: 'bar',
+                barWidth: '40%'
+            }
+        ]
+    };
+
+    $.ajax({
+        url: '/api/hainan-crops/aquaFarming/getProductionDistribution',
+        type: 'GET',
+        dataType: 'json',
+        success: function (data) {
+            // 将Map转换为数组形式，方便后续操作
+            var dataArray = Object.entries(data);
+
+            // 按降序排序
+            dataArray.sort(function (a, b) {
+                return b[1] - a[1];
+            });
+
+            // 设置不同的颜色，可以根据需要修改颜色值
+            var colors = ['#1694f1', '#e0cb6f', '#6490f0', '#a8d68e', '#dca0ac'];
+
+            // 将排序后的数据设置到 option 中，并为每个数据项设置不同的颜色
+            option.xAxis.data = dataArray.map(function (item) {
+                return item[0];
+            });
+            option.series[0].data  = dataArray.map(function (item, index) {
+                return {
+                    value: item[1],
+                    // 从颜色数组中取出对应的颜色
+                    itemStyle: { normal: { color: colors[index % colors.length] } }
+                };
+            });
+
+            myChart.setOption(option);
+        },
+
         error: function (error) {
             console.log('Failed to fetch data:', error);
         }

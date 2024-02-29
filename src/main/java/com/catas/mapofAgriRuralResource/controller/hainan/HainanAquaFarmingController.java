@@ -45,4 +45,9 @@ public class HainanAquaFarmingController {
     public List<Double> getAquacultureProduction() throws IOException {
         return service.getAquacultureProduction();
     }
+
+    @GetMapping("/getProductionDistribution")
+    public Map<String, Double> getProductionDistribution() throws IOException {
+        return service.getProductionDistribution();
+    }
 }

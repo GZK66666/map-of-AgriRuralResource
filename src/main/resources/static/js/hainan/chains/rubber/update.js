@@ -5,6 +5,7 @@ function rubber_update() {
     rubber_update_chart4();
     rubber_update_chart5();
     rubber_update_chart6();
+    rubber_update_chart7();
 }
 
 function rubber_update_chart1() {
@@ -561,6 +562,142 @@ function rubber_update_chart4() {
             option.series[0].data = dataArray.map(function (item) {
                 return item[1];
             });
+
+            myChart.setOption(option);
+        },
+        error: function (error) {
+            console.log('Failed to fetch data:', error);
+        }
+    });
+
+    // 使用刚指定的配置项和数据显示图表。
+    window.addEventListener("resize", function () {
+        myChart.resize();
+    });
+}
+
+function rubber_update_chart7() {
+    var title = document.getElementById('bottom_2');
+    title.innerHTML = '<img src="../../static/img/t_4.png" alt="">全省各市县天然橡胶均价情况';
+    var divElement = document.getElementById('chart_7_date_button');
+    divElement.style.display = 'block';
+
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('chart_7'));
+    myChart.dispose();
+    myChart = echarts.init(document.getElementById('chart_7'));
+
+    var option = {
+        legend: {
+            data: ['各市县收购均价', '全省均价'],
+            top: '8%',
+            textStyle: {
+                color: 'white',
+                fontSize: 16
+            }
+        },
+        grid: {
+            top: '30%',
+            bottom: '19%',
+            left: '5%',
+            right: '5%',
+        },
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'shadow'
+            },
+            formatter: "{b} : {c}元/公斤"
+        },
+        xAxis: {
+            type: 'category',
+            data: [],
+            axisLabel: {
+                interval: 0,  // 设置刻度标签全部显示
+                rotate: 45,   // 设置刻度标签旋转角度
+                textStyle: {
+                    color: 'white'  // 设置刻度标签文字颜色
+                }
+            }
+        },
+        yAxis: {
+            type: 'value',
+            axisLabel: {
+                color: 'white'
+            }
+        },
+        series: [
+            {
+                name: '各市县收购均价',
+                data: [],
+                type: 'bar'
+            },
+            {
+                name: '全省均价',
+                type: 'line',
+                markLine: {
+                    data: [
+                        {
+                            name: '全省均价',
+                            yAxis: 11,
+                            lineStyle: { color: 'yellow' },
+                        }
+                    ],
+                    lineStyle: {
+                        width: 2,  // 设置线条宽度
+                    },
+                    label: {
+                        color: 'white'  // 设置字体颜色为白色
+                    }
+                }
+            }
+        ]
+    };
+
+    $.ajax({
+        url: '/api/hainan-crops/rubber/getAllRegionAvgPriceByMonth?month=10',
+        type: 'GET',
+        dataType: 'json',
+        success: function (data) {
+            // 解析数据
+            var parsedData = [];
+            for (var key in data) {
+                parsedData.push({
+                    name: key,
+                    value: data[key]
+                });
+            }
+
+            // 分别提取“全省”和其他数据
+            var provinceData = parsedData.find(function (item) {
+                return item.name === '全 省';
+            });
+
+            var otherData = parsedData.filter(function (item) {
+                return item.name !== '全 省';
+            });
+
+            otherData.sort(function (a, b) {
+                return b.value - a.value;
+            });
+
+            // 将排序后的数据设置到 option 中
+            option.xAxis.data = otherData.map(function (item) {
+                return item.name;
+            });
+
+            option.series[0].data = otherData.map(function (item) {
+                return item.value;
+            });
+
+            // 填充 markLine 数据
+            option.series[1].markLine.data = [
+                {
+                    name: '全省均价',
+                    yAxis: provinceData ? provinceData.value : 0,
+                    lineStyle: { color: '#abf0b9' },
+                }
+            ];
 
             myChart.setOption(option);
         },

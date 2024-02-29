@@ -101,4 +101,18 @@ public class HainanAquaFarmingService {
 
         return result;
     }
+
+    public Map<String, Double> getProductionDistribution() throws IOException {
+        Map<String, Double> result = new HashMap<>();
+
+        Sheet sheet = reader.ReadSheetFromFile(Constants.hainanAquaFarmingDataFile, Constants.aquaFarmingProductionDistributionSheet);
+
+        for (int rowIndex = 1; rowIndex < 6; rowIndex++) {
+            Row data = sheet.getRow(rowIndex);
+
+            result.put(data.getCell(0).getStringCellValue(), data.getCell(1).getNumericCellValue());
+        }
+
+        return result;
+    }
 }
