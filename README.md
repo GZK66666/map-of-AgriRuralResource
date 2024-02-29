@@ -2,14 +2,9 @@
 
 ## 项目简介
 - 对中国及世界热带区域农业农村资源数据可视化，目前包含：
-  - 屯昌
-    - 农业农村经济
-    - 新型农业经营主体
-    - 热带争作物产业数据
-  - 海南
-    - 天然橡胶产业
-    - todo：更多作物
-  - 中国（todo）
+  - 屯昌农业农村经济一张图
+  - 海南17大产业链分布图
+  - 中国热区十大产业分布图（todo）
 
 ## 框架环境
 - java：1.8
@@ -20,13 +15,11 @@
 
 ## 使用说明
 - 配置好环境后，直接clone下来运行即可
-- 海南大数据看板访问：http://localhost/hainan-agriculture-bigdata/crops/rubber
-- 屯昌大数据看板访问：http://localhost/tunchang-agriculture-bigdata/index
+- 屯昌农业农村经济一张图：http://localhost/tunchang-agriculture-bigdata/index
+- 海南17大产业链分布图：http://localhost/hainan-agriculture-bigdata/index
 
 ## 效果预览
-### 屯昌大数据看板
+### 屯昌农业农村经济一张图
 ![tunchang_ecom.png](images%2Ftunchang_ecom.png)
-![tunchang_enterprise.png](images%2Ftunchang_enterprise.png)
-![tunchang_crops.png](images%2Ftunchang_crops.png)
-### 海南大数据看板
-![hainan_crops_rubber.png](images%2Fhainan_crops_rubber.png)
+### 海南17大产业链分布图
+![hainan_17_chains.png](images%2Fhainan_17_chains.png)
