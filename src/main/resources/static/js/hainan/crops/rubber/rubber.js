@@ -59,8 +59,8 @@ $(function () {
                     type: 'value',
                     name: '年末面积/收获面积',
                     min: 0,
-                    max: 600000,
-                    interval: 120000,
+                    max: 800,
+                    interval: 160,
                     axisLabel: {
                         formatter: '{value}',
                         color: 'white'
@@ -74,8 +74,8 @@ $(function () {
                     type: 'value',
                     name: '新种面积',
                     min: 0,
-                    max: 10000,
-                    interval: 2000,
+                    max: 15,
+                    interval: 3,
                     axisLabel: {
                         formatter: '{value}',
                         color: 'white'
@@ -93,7 +93,7 @@ $(function () {
                     yAxisIndex: 0,
                     tooltip: {
                         valueFormatter: function (value) {
-                            return value + ' 公顷';
+                            return value + ' 万亩';
                         }
                     },
                     data: [],
@@ -104,7 +104,7 @@ $(function () {
                     yAxisIndex: 0,
                     tooltip: {
                         valueFormatter: function (value) {
-                            return value + ' 公顷';
+                            return value + ' 万亩';
                         }
                     },
                     data: []
@@ -115,7 +115,7 @@ $(function () {
                     yAxisIndex: 1,
                     tooltip: {
                         valueFormatter: function (value) {
-                            return value + ' 公顷';
+                            return value + ' 万亩';
                         }
                     },
                     data: []
@@ -300,7 +300,7 @@ $(function () {
                 }],
                 tooltip: {
                     trigger: 'item',
-                    formatter: '{b}: {c}公顷',
+                    formatter: '{b}: {c}万亩',
                 },
             });
         }

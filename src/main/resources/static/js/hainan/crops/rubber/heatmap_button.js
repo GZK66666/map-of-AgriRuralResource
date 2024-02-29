@@ -21,7 +21,7 @@
             var myChart = echarts.init(document.getElementById('chart_map'));
 
             var apiUrl = '/api/hainan-crops/rubber/get2022EndYearAreaOrProduction?index=1';
-            var suffix = "公顷";
+            var suffix = "万亩";
             var dataType = document.querySelector("#nav1 .options li a.selected").getAttribute('data-type');
             if (dataType === '总产量分布') {
                 apiUrl = '/api/hainan-crops/rubber/get2022EndYearAreaOrProduction?index=2';
