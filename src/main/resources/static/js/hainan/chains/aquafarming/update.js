@@ -16,9 +16,8 @@ function aquafarming_update_chart1() {
 
     // 更新图表
     // 先摧毁之前的chart，再重新创建
+    echarts.dispose(document.getElementById('chart_1'));
     var myChart = echarts.init(document.getElementById('chart_1'));
-    myChart.dispose();
-    myChart = echarts.init(document.getElementById('chart_1'));
 
     var option = {
         tooltip: {
@@ -109,9 +108,8 @@ function aquafarming_update_chart2() {
     title.innerHTML = '<img src="../../static/img/t_4.png" alt="">近年淡水养殖面积情况';
 
 
+    echarts.dispose(document.getElementById('chart_2'));
     var myChart = echarts.init(document.getElementById('chart_2'));
-    myChart.dispose();
-    myChart = echarts.init(document.getElementById('chart_2'));
 
     var option = {
         tooltip: {
@@ -202,9 +200,8 @@ function aquafarming_update_chart5() {
     title.innerHTML = '<img src="../../static/img/t_4.png" alt="">近年海水养殖各类面积占比情况';
 
     // 基于准备好的dom，初始化echarts实例
+    echarts.dispose(document.getElementById('chart_5'));
     var myChart = echarts.init(document.getElementById('chart_5'));
-    myChart.dispose();
-    myChart = echarts.init(document.getElementById('chart_5'));
 
     var option = {
         tooltip: {
@@ -275,9 +272,8 @@ function aquafarming_update_chart3() {
     var title = document.getElementById('right_1');
     title.innerHTML = '<img src="../../static/img/t_4.png" alt="">近年水产品总产量情况';
 
+    echarts.dispose(document.getElementById('chart_3'));
     var myChart = echarts.init(document.getElementById('chart_3'));
-    myChart.dispose();
-    myChart = echarts.init(document.getElementById('chart_3'));
 
     var option = {
         tooltip: {
@@ -366,9 +362,8 @@ function aquafarming_update_chart6() {
     chart.innerHTML = '<div id="chart_6_all" class="echart fl t_btn4" style="width:100%;height: 280px;cursor: pointer;"></div>'
 
     // 基于准备好的dom，初始化echarts实例
+    echarts.dispose(document.getElementById('chart_6_all'));
     var myChart = echarts.init(document.getElementById('chart_6_all'));
-    myChart.dispose();
-    myChart = echarts.init(document.getElementById('chart_6_all'));
 
     var option = {
         tooltip: {
@@ -455,9 +450,8 @@ function aquafarming_update_chart4() {
     title.innerHTML = '<img src="../../static/img/t_4.png" alt="">近年淡水产品总产量情况';
 
     // 基于准备好的dom，初始化echarts实例
+    echarts.dispose(document.getElementById('chart_4'));
     var myChart = echarts.init(document.getElementById('chart_4'));
-    myChart.dispose();
-    myChart = echarts.init(document.getElementById('chart_4'));
 
     var option = {
         tooltip: {
@@ -546,9 +540,8 @@ function aquafarming_update_chart7() {
     divElement.style.display = 'none';
 
     // 基于准备好的dom，初始化echarts实例
+    echarts.dispose(document.getElementById('chart_7'));
     var myChart = echarts.init(document.getElementById('chart_7'));
-    myChart.dispose();
-    myChart = echarts.init(document.getElementById('chart_7'));
 
     var option = {
         grid: {
@@ -648,9 +641,8 @@ function aquafarming_update_heatmap() {
 
 
     // 基于准备好的dom，初始化echarts实例
+    echarts.dispose(document.getElementById('chart_map'));
     var myChart = echarts.init(document.getElementById('chart_map'));
-    myChart.dispose();
-    myChart = echarts.init(document.getElementById('chart_map'));
 
     // 发送请求获取后端数据
     $.ajax({
