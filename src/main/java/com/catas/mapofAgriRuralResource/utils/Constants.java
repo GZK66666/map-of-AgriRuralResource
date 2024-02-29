@@ -41,7 +41,7 @@ public class Constants {
     public static final int betelNutAveragePriceSheet = 6;
 
     // hainan data file path
-    public static final String hainanRubberDataFile = "data/hainan/rubber.xlsx";
+    public static final String hainanRubberDataFile = "data/hainan/天然橡胶.xlsx";
     public static final int rubberAreaSheet2 = 0;
     public static final int rubberYieldSheet = 1;
     public static final int rubberProductionSheet2 = 2;

@@ -1,4 +1,4 @@
-package com.catas.mapofAgriRuralResource.controller.hainan.crops;
+package com.catas.mapofAgriRuralResource.controller.hainan;
 
 import com.catas.mapofAgriRuralResource.service.hainan.crops.HainanRubberService;
 import org.springframework.beans.factory.annotation.Autowired;
