@@ -1,5 +1,6 @@
 function rubber_update() {
     rubber_update_chart1();
+    rubber_update_chart2();
 }
 
 function rubber_update_chart1() {
@@ -129,6 +130,95 @@ function rubber_update_chart1() {
             option.series[0].data = Object.values(r1);
             option.series[1].data = Object.values(r2);
             option.series[2].data = Object.values(r3);
+
+            myChart.setOption(option);
+        },
+        error: function (error) {
+            console.log('Failed to fetch data:', error);
+        }
+    });
+
+    // 使用刚指定的配置项和数据显示图表。
+    window.addEventListener("resize", function () {
+        myChart.resize();
+    });
+}
+
+function rubber_update_chart2() {
+    var title = document.getElementById('left_2');
+    title.innerHTML = '<img src="../../static/img/t_4.png" alt="">近年海南天然橡胶产量情况';
+
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('chart_2'));
+    myChart.dispose();
+    myChart = echarts.init(document.getElementById('chart_2'));
+
+    var option = {
+        tooltip: {
+            trigger: 'axis',
+            formatter: function (params) {
+                var result = params[0].name + '<br>';
+                params.forEach(function (item) {
+                    result += item.seriesName + ': ' + item.value + ' 吨<br>'; // 在这里添加公顷后缀
+                });
+                return result;
+            }
+        },
+        toolbox: {
+            show: false, // 右上角的选项
+            feature: {
+                dataZoom: {
+                    yAxisIndex: 'none'
+                },
+                dataView: { readOnly: false },
+                magicType: { type: ['line', 'bar'] },
+                restore: {},
+                saveAsImage: {}
+            }
+        },
+        grid: {
+            left: '10%',
+            right: '8%',
+            top: '10%',
+            bottom: '12%'
+        },
+        xAxis: {
+            type: 'value',
+            axisLabel: {
+                formatter: '{value}',
+                color: 'white'
+            },
+            boundaryGap: [0, 0.01],
+            min: 290000,
+            max: 360000,
+            interval: 10000
+        },
+        yAxis: {
+            type: 'category',
+            data: ['2018', '2019', '2020', '2021', '2022'],
+            axisLabel: {
+                color: 'white'
+            }
+        },
+        series: [
+            {
+                name: '产量',
+                type: 'bar',
+                barWidth: '50%',
+                data: [],
+                label: {
+                    show: true
+                },
+            },
+        ]
+    };
+
+    $.ajax({
+        url: '/api/hainan-crops/rubber/getYield',
+        type: 'GET',
+        dataType: 'json',
+        success: function (data) {
+            option.series[0].data = data;
 
             myChart.setOption(option);
         },

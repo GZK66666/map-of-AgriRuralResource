@@ -29,4 +29,18 @@ public class HainanAquaFarmingService {
 
         return result;
     }
+
+    public List<Double> getAquacultureArea() throws IOException {
+        List<Double> result = new ArrayList<>();
+
+        Sheet sheet = reader.ReadSheetFromFile(Constants.hainanAquaFarmingDataFile, Constants.aquaFarmingAquacultureAreaSheet);
+
+        for (int rowIndex = 1; rowIndex < 6; rowIndex++) {
+            Row data = sheet.getRow(rowIndex);
+
+            result.add(data.getCell(1).getNumericCellValue());
+        }
+
+        return result;
+    }
 }
