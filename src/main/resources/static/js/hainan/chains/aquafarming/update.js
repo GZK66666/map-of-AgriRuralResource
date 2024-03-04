@@ -12,7 +12,7 @@ function aquafarming_update() {
 function aquafarming_update_chart1() {
     // 更新title
     var title = document.getElementById('left_1');
-    title.innerHTML = '<img src="../../static/img/t_4.png" alt="">近年海水养殖面积情况';
+    title.innerHTML = '<img src="../../static/img/t_4.png" alt="">近年水产品养殖面积及构成';
 
     // 更新图表
     // 先摧毁之前的chart，再重新创建
@@ -22,73 +22,93 @@ function aquafarming_update_chart1() {
     var option = {
         tooltip: {
             trigger: 'axis',
+            axisPointer: {
+                type: 'cross',
+                label: {
+                    backgroundColor: '#6a7985'
+                }
+            },
             formatter: function (params) {
                 var result = params[0].name + '<br>';
+                var total = 0;
                 params.forEach(function (item) {
                     result += item.seriesName + ': ' + item.value + ' 万亩<br>';
+                    total += item.value;
                 });
+                result += '水产品养殖: ' + total.toFixed(2) + ' 万亩<br>';
                 return result;
             }
         },
-        toolbox: {
-            show: false, // 右上角的选项
-            feature: {
-                dataZoom: {
-                    yAxisIndex: 'none'
-                },
-                dataView: { readOnly: false },
-                magicType: { type: ['line', 'bar'] },
-                restore: {},
-                saveAsImage: {}
+        legend: {
+            data: ['海水养殖', '淡水养殖'],
+            top: '8%',
+            textStyle: {
+                color: 'white',
+                fontSize: '14'
             }
         },
         grid: {
-            left: '9%',
+            left: '4%',
             right: '5%',
-            top: '15%',
-            bottom: '13%'
+            bottom: '5%',
+            containLabel: true
         },
-        xAxis: {
-            type: 'category',
-            boundaryGap: false,
-            data: ['2018', '2019', '2020', '2021', '2022'],
-            axisLabel: {
-                color: 'white'
+        xAxis: [
+            {
+                type: 'category',
+                boundaryGap: false,
+                data: ['2018', '2019', '2020', '2021', '2022'],
+                axisLabel: {
+                    color: 'white',
+                    fontSize: 14
+                }
             }
-        },
+        ],
         yAxis: {
             type: 'value',
             axisLabel: {
                 formatter: '{value}',
-                color: 'white'
+                color: 'white',
+                fontSize: 14
             },
-            min: 20,
-            max: 35,
-            interval: 3
         },
         series: [
             {
-                name: '面积',
+                name: '海水养殖',
                 type: 'line',
-                data: [],
-                areaStyle: {}, // 面积
-                smooth: true, // 平滑
-                markPoint: {
-                    data: [
-                        { type: 'max', name: 'Max' },
-                        { type: 'min', name: 'Min' }
-                    ]
+                stack: 'Total',
+                areaStyle: {},
+                emphasis: {
+                    focus: 'series'
                 },
+                data: []
             },
+            {
+                name: '淡水养殖',
+                type: 'line',
+                stack: 'Total',
+                areaStyle: {},
+                emphasis: {
+                    focus: 'series'
+                },
+                data: []
+            }
         ]
     };
 
     $.ajax({
-        url: '/api/hainan-crops/aquaFarming/getMaricultureArea',
+        url: '/api/hainan-crops/aquaFarming/getAreaAndComposition',
         type: 'GET',
         dataType: 'json',
         success: function (data) {
-            option.series[0].data = data;
+            // 迭代Map中的键值对
+            Object.entries(data).forEach(([key, value], index) => {
+                if (key === '海水养殖') {
+                    option.series[0].data = value;
+                } else if (key === '淡水养殖') {
+                    option.series[1].data = value;
+                }
+            });
 
             myChart.setOption(option);
         },
@@ -96,6 +116,7 @@ function aquafarming_update_chart1() {
             console.log('Failed to fetch data:', error);
         }
     });
+
 
     // 使用刚指定的配置项和数据显示图表。
     window.addEventListener("resize", function () {

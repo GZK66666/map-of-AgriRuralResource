@@ -2,7 +2,6 @@ package com.catas.mapofAgriRuralResource.service.hainan;
 
 import com.catas.mapofAgriRuralResource.utils.Constants;
 import com.catas.mapofAgriRuralResource.utils.ExcelReader;
-import org.apache.poi.hpsf.Decimal;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,16 +21,22 @@ public class HainanAquaFarmingService {
 
     private static final DecimalFormat DF = new DecimalFormat("#.00");
 
-    public List<Double> getMaricultureArea() throws IOException {
-        List<Double> result = new ArrayList<>();
+    public Map<String, List<Double>> getAreaAndComposition() throws IOException {
+        Map<String, List<Double>> result = new HashMap<>();
 
-        Sheet sheet = reader.ReadSheetFromFile(Constants.hainanAquaFarmingDataFile, Constants.aquaFarmingMaricultureAreaSheet);
+        Sheet sheet = reader.ReadSheetFromFile(Constants.hainanAquaFarmingDataFile, Constants.aquaFarmingAreaAndCompositionSheet);
 
+        List<Double> seawater = new ArrayList<>();
+        List<Double> freshwater = new ArrayList<>();
         for (int rowIndex = 1; rowIndex < 6; rowIndex++) {
             Row data = sheet.getRow(rowIndex);
 
-            result.add(Double.valueOf(DF.format(data.getCell(1).getNumericCellValue())));
+            seawater.add(Double.valueOf(DF.format(data.getCell(2).getNumericCellValue())));
+            freshwater.add(Double.valueOf(DF.format(data.getCell(3).getNumericCellValue())));
         }
+
+        result.put("海水养殖", seawater);
+        result.put("淡水养殖", freshwater);
 
         return result;
     }

@@ -17,9 +17,9 @@ public class HainanAquaFarmingController {
     @Autowired
     HainanAquaFarmingService service;
 
-    @GetMapping("/getMaricultureArea")
-    public List<Double> getMaricultureArea() throws IOException {
-        return service.getMaricultureArea();
+    @GetMapping("/getAreaAndComposition")
+    public Map<String, List<Double>> getAreaAndComposition() throws IOException {
+        return service.getAreaAndComposition();
     }
 
     @GetMapping("/getAquacultureArea")
