@@ -318,7 +318,7 @@ function aquafarming_update_chart5() {
 
 function aquafarming_update_chart3() {
     var title = document.getElementById('right_1');
-    title.innerHTML = '<img src="../../static/img/t_4.png" alt="">近年水产品总产量情况';
+    title.innerHTML = '<img src="../../static/img/t_4.png" alt="">近年养殖水产品产量及构成';
 
     echarts.dispose(document.getElementById('chart_3'));
     var myChart = echarts.init(document.getElementById('chart_3'));
@@ -326,69 +326,76 @@ function aquafarming_update_chart3() {
     var option = {
         tooltip: {
             trigger: 'axis',
-            formatter: function (params) {
-                var result = params[0].name + '<br>';
-                params.forEach(function (item) {
-                    result += item.seriesName + ': ' + item.value + ' 万吨<br>'; // 在这里添加公顷后缀
-                });
-                return result;
-            }
+            axisPointer: {
+                // Use axis to trigger tooltip
+                type: 'shadow' // 'shadow' as default; can also be 'line' or 'shadow'
+            },
+            formatter: "{a} <br/> {c}万吨"
         },
-        toolbox: {
-            show: false, // 右上角的选项
-            feature: {
-                dataZoom: {
-                    yAxisIndex: 'none'
-                },
-                dataView: { readOnly: false },
-                magicType: { type: ['line', 'bar'] },
-                restore: {},
-                saveAsImage: {}
+        legend: {
+            data: ['海水养殖', '淡水养殖'],
+            top: '8%',
+            textStyle: {
+                color: 'white',
+                fontSize: '14'
             }
         },
         grid: {
-            left: '10%',
-            right: '8%',
-            top: '10%',
-            bottom: '12%'
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
         },
         xAxis: {
             type: 'value',
             axisLabel: {
-                formatter: '{value}',
-                color: 'white'
-            },
-            boundaryGap: [0, 0.01],
-            min: 160,
-            max: 178,
-            interval: 3
+                color: 'white',
+                fontSize: 14
+            }
         },
         yAxis: {
             type: 'category',
             data: ['2018', '2019', '2020', '2021', '2022'],
             axisLabel: {
-                color: 'white'
+                color: 'white',
+                fontSize: 14
             }
         },
         series: [
             {
-                name: '产量',
+                name: '海水养殖',
                 type: 'bar',
-                barWidth: '50%',
-                data: [],
+                stack: 'total',
                 label: {
                     show: true
                 },
+                emphasis: {
+                    focus: 'series'
+                },
+                data: []
             },
+            {
+                name: '淡水养殖',
+                type: 'bar',
+                stack: 'total',
+                label: {
+                    show: true
+                },
+                emphasis: {
+                    focus: 'series'
+                },
+                data: []
+            }
         ]
     };
 
     $.ajax({
-        url: '/api/hainan-crops/aquaFarming/getProduction',
+        url: '/api/hainan-crops/aquaFarming/getAquacultureProductsProduction',
         type: 'GET',
         dataType: 'json',
         success: function (data) {
-            option.series[0].data = data;
+            option.series[0].data = data['海水养殖'];
+            option.series[1].data = data['淡水养殖'];
 
             myChart.setOption(option);
         },
