@@ -57,7 +57,7 @@ public class Constants {
     public static final int aquaFarmingMaricultureAreaDistributionSheet = 2;
     public static final int aquaFarmingAquacultureProductsProductionSheet = 3;
     public static final int aquaFarmingHarvestProductsProductionSheet = 4;
-    public static final int aquaFarmingAquacultureProductionSheet = 5;
+    public static final int aquaFarmingFisheryClassificationOutputSheet = 5;
     public static final int aquaFarmingProductionDistributionSheet = 6;
     public static final int aquaFarmingDistributionSheet = 7;
 }

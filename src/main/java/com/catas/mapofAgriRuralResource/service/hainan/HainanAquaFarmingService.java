@@ -118,15 +118,15 @@ public class HainanAquaFarmingService {
         return result;
     }
 
-    public List<Double> getAquacultureProduction() throws IOException {
-        List<Double> result = new ArrayList<>();
+    public Map<String, Double> getFisheryClassificationOutput() throws IOException {
+        Map<String, Double> result = new HashMap<>();
 
-        Sheet sheet = reader.ReadSheetFromFile(Constants.hainanAquaFarmingDataFile, Constants.aquaFarmingAquacultureProductionSheet);
+        Sheet sheet = reader.ReadSheetFromFile(Constants.hainanAquaFarmingDataFile, Constants.aquaFarmingFisheryClassificationOutputSheet);
 
-        for (int rowIndex = 1; rowIndex < 6; rowIndex++) {
+        for (int rowIndex = 1; rowIndex < 9; rowIndex++) {
             Row data = sheet.getRow(rowIndex);
 
-            result.add(Double.valueOf(DF.format(data.getCell(1).getNumericCellValue())));
+            result.put(data.getCell(0).getStringCellValue(), Double.valueOf(DF.format(data.getCell(1).getNumericCellValue())));
         }
 
         return result;

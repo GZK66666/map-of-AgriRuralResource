@@ -509,81 +509,82 @@ function aquafarming_update_chart6() {
 
 function aquafarming_update_chart4() {
     var title = document.getElementById('right_3');
-    title.innerHTML = '<img src="../../static/img/t_4.png" alt="">近年淡水产品总产量情况';
+    title.innerHTML = '<img src="../../static/img/t_4.png" alt="">2022年渔业分类产值情况';
 
     // 基于准备好的dom，初始化echarts实例
     echarts.dispose(document.getElementById('chart_4'));
     var myChart = echarts.init(document.getElementById('chart_4'));
 
     var option = {
+        grid: {
+            left: '15%',
+        },
         tooltip: {
             trigger: 'axis',
-            formatter: function (params) {
-                var result = params[0].name + '<br>';
-                params.forEach(function (item) {
-                    result += item.seriesName + ': ' + item.value + ' 万吨<br>'; // 在这里添加公顷后缀
-                });
-                return result;
-            }
-        },
-        toolbox: {
-            show: false, // 右上角的选项
-            feature: {
-                dataZoom: {
-                    yAxisIndex: 'none'
-                },
-                dataView: { readOnly: false },
-                magicType: { type: ['line', 'bar'] },
-                restore: {},
-                saveAsImage: {}
-            }
-        },
-        grid: {
-            left: '10%',
-            right: '8%',
-            top: '10%',
-            bottom: '12%'
+            axisPointer: {
+                type: 'shadow'
+            },
+            formatter: "{b} : {c}万元"
         },
         xAxis: {
-            type: 'value',
+            type: 'category',
+            data: [],
             axisLabel: {
-                formatter: '{value}',
-                color: 'white'
-            },
-            boundaryGap: [0, 0.01],
-            min: 35,
-            max: 45,
-            interval: 2
+                interval: 0,  // 设置刻度标签全部显示
+                rotate: 45,   // 设置刻度标签旋转角度
+                textStyle: {
+                    color: 'white',  // 设置刻度标签文字颜色
+                    fontSize: 14
+                }
+            }
         },
         yAxis: {
-            type: 'category',
-            data: ['2018', '2019', '2020', '2021', '2022'],
+            type: 'value',
             axisLabel: {
-                color: 'white'
+                color: 'white',
+                fontSize: 14
             }
         },
         series: [
             {
-                name: '产量',
-                type: 'bar',
-                barWidth: '50%',
+                name: '产值',
                 data: [],
-                label: {
-                    show: true
-                },
-            },
+                type: 'bar',
+            }
         ]
     };
 
     $.ajax({
-        url: '/api/hainan-crops/aquaFarming/getAquacultureProduction',
+        url: '/api/hainan-crops/aquaFarming/getFisheryClassificationOutput',
         type: 'GET',
         dataType: 'json',
         success: function (data) {
-            option.series[0].data = data;
+            // 将Map转换为数组形式，方便后续操作
+            var dataArray = Object.entries(data);
+
+            // 按降序排序
+            dataArray.sort(function (a, b) {
+                return b[1] - a[1];
+            });
+
+            // 设置不同的颜色，可以根据需要修改颜色值
+            var colors = ['#1694f1', '#e0cb6f', '#6490f0', '#a8d68e', '#dca0ac'];
+
+            // 将排序后的数据设置到 option 中，并为每个数据项设置不同的颜色
+            option.xAxis.data = dataArray.map(function (item) {
+                return item[0];
+            });
+            option.series[0].data  = dataArray.map(function (item, index) {
+                return {
+                    value: item[1],
+                    // 从颜色数组中取出对应的颜色
+                    // itemStyle: { normal: { color: colors[index % colors.length] } }
+                };
+            });
 
             myChart.setOption(option);
         },
+
         error: function (error) {
             console.log('Failed to fetch data:', error);
         }
