@@ -22,9 +22,9 @@ public class HainanAquaFarmingController {
         return service.getAreaAndComposition();
     }
 
-    @GetMapping("/getAquacultureArea")
-    public List<Double> getAquacultureArea() throws IOException {
-        return service.getAquacultureArea();
+    @GetMapping("/getProductionAndComposition")
+    public Map<String, List<Double>> getProductionAndComposition() throws IOException {
+        return service.getProductionAndComposition();
     }
 
     @GetMapping("/getMaricultureAreaDistribution")

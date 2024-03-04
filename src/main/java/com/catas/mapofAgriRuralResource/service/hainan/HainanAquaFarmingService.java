@@ -41,16 +41,25 @@ public class HainanAquaFarmingService {
         return result;
     }
 
-    public List<Double> getAquacultureArea() throws IOException {
-        List<Double> result = new ArrayList<>();
+    public Map<String, List<Double>> getProductionAndComposition() throws IOException {
+        Map<String, List<Double>> result = new HashMap<>();
 
-        Sheet sheet = reader.ReadSheetFromFile(Constants.hainanAquaFarmingDataFile, Constants.aquaFarmingAquacultureAreaSheet);
+        Sheet sheet = reader.ReadSheetFromFile(Constants.hainanAquaFarmingDataFile, Constants.aquaFarmingProductionAndCompositionSheet);
 
+        List<Double> total = new ArrayList<>();
+        List<Double> seawater = new ArrayList<>();
+        List<Double> freshwater = new ArrayList<>();
         for (int rowIndex = 1; rowIndex < 6; rowIndex++) {
             Row data = sheet.getRow(rowIndex);
 
-            result.add(Double.valueOf(DF.format(data.getCell(1).getNumericCellValue())));
+            total.add(Double.valueOf(DF.format(data.getCell(1).getNumericCellValue())));
+            seawater.add(Double.valueOf(DF.format(data.getCell(2).getNumericCellValue())));
+            freshwater.add(Double.valueOf(DF.format(data.getCell(3).getNumericCellValue())));
         }
+
+        result.put("总产量", total);
+        result.put("海水产品", seawater);
+        result.put("淡水产品", freshwater);
 
         return result;
     }
